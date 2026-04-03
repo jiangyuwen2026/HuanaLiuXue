@@ -18,6 +18,10 @@ import CompetitionDetail from './pages/CompetitionDetail';
 import Research from './pages/Research';
 import Appointment from './pages/Appointment';
 import StudyNews from './pages/StudyNews';
+import PracticeHome from './pages/PracticeHome';
+import PracticeExam from './pages/PracticeExam';
+import ExamReport from './pages/ExamReport';
+import WrongBook from './pages/WrongBook';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -81,6 +85,10 @@ function App() {
               <Route path="/appointment" element={<Appointment />} />
               <Route path="/study-news" element={<StudyNews />} />
               <Route path="/study-news/:id" element={<StudyNews />} />
+              <Route path="/practice" element={<PracticeHome />} />
+              <Route path="/practice/exam" element={<PracticeExam />} />
+              <Route path="/practice/report/:examId" element={<ExamReport />} />
+              <Route path="/practice/wrong-book" element={<WrongBook />} />
             </Routes>
           </ErrorBoundary>
         </main>

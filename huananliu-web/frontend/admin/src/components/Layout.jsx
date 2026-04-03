@@ -21,7 +21,9 @@ import {
   LogoutOutlined,
   ThunderboltOutlined,
   UserOutlined,
-  UserSwitchOutlined
+  UserSwitchOutlined,
+  QuestionCircleOutlined,
+  FileDoneOutlined
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = AntLayout;
@@ -46,6 +48,9 @@ function Layout() {
     if (pathname === '/admin-users' || pathname === '/customers') {
       return [pathname, '/user-management'];
     }
+    if (pathname === '/question-bank' || pathname === '/exam-papers') {
+      return [pathname, '/question-bank'];
+    }
     return [pathname];
   };
   
@@ -60,6 +65,9 @@ function Layout() {
     }
     if (pathname === '/admin-users' || pathname === '/customers') {
       return ['/user-management'];
+    }
+    if (pathname === '/question-bank' || pathname === '/exam-papers') {
+      return ['/question-bank'];
     }
     return [];
   };
@@ -102,6 +110,15 @@ function Layout() {
       children: [
         { key: '/admin-users', icon: <UserOutlined />, label: '后台用户' },
         { key: '/customers', icon: <TeamOutlined />, label: '注册客户' },
+      ]
+    },
+    {
+      key: '/question-bank',
+      icon: <QuestionCircleOutlined />,
+      label: '题库管理',
+      children: [
+        { key: '/question-bank', icon: <QuestionCircleOutlined />, label: '题库管理' },
+        { key: '/exam-papers', icon: <FileDoneOutlined />, label: '试卷管理' },
       ]
     },
   ];

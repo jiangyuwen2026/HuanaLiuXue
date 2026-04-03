@@ -26,6 +26,8 @@ const About = lazy(() => import('./pages/About'));
 const AdminUsers = lazy(() => import('./pages/AdminUsers'));
 const Customers = lazy(() => import('./pages/Customers'));
 const WordImportTest = lazy(() => import('./pages/WordImportTest'));
+const QuestionBank = lazy(() => import('./pages/QuestionBank'));
+const ExamPapers = lazy(() => import('./pages/ExamPapers'));
 
 // 加载中组件
 const PageLoading = () => (
@@ -67,6 +69,8 @@ function App() {
         <Route path="admin-users" element={<Suspense fallback={<PageLoading />}><AdminUsers /></Suspense>} />
         <Route path="customers" element={<Suspense fallback={<PageLoading />}><Customers /></Suspense>} />
         <Route path="word-import" element={<Suspense fallback={<PageLoading />}><WordImportTest /></Suspense>} />
+        <Route path="question-bank" element={<Suspense fallback={<PageLoading />}><QuestionBank /></Suspense>} />
+        <Route path="exam-papers" element={<Suspense fallback={<PageLoading />}><ExamPapers /></Suspense>} />
       </Route>
     </Routes>
   );
