@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图标下载助手 - IconPark</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: #2C5F7C;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2C5F7C;
+        }
+        
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .icon-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        
+        .icon-card:hover {
+            border-color: #2C5F7C;
+            box-shadow: 0 4px 12px rgba(44, 95, 124, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .icon-preview {
+            width: 81px;
+            height: 81px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+        
+        .icon-preview svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .icon-name {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .icon-info {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .search-link {
+            display: block;
+            text-align: center;
+            background: #2C5F7C;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .search-link:hover {
+            background: #3A7CA5;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            background: #52C41A;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: #73D13D;
+        }
+        
+        .tabbar-card .icon-preview {
+            width: 81px;
+            height: 81px;
+        }
+        
+        .function-card .icon-preview {
+            width: 96px;
+            height: 96px;
+        }
+        
+        .color-badge {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-left: 5px;
+            vertical-align: middle;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            border-left: 4px solid #1890ff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .instructions h3 {
+            color: #0050b3;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .checklist {
+            background: #f6ffed;
+            border-left: 4px solid #52c41a;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .checklist h3 {
+            color: #389e0d;
+            margin-bottom: 15px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+        
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #52c41a;
+            border-radius: 4px;
+            margin-right: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            color: #52c41a;
+            font-size: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 图标下载助手</h1>
+        <p class="subtitle">从 IconPark 选择适合小程序的图标</p>
+        
+        <div class="instructions">
+            <h3>📖 使用说明</h3>
+            <ol>
+                <li>点击下方的"搜索图标"链接，打开 IconPark 官网</li>
+                <li>在 IconPark 中选择合适的图标风格（线性、填充等）</li>
+                <li>点击图标上的"下载"按钮</li>
+                <li>选择 PNG 格式，设置尺寸（TabBar: 81×81，功能图标: 96×96）</li>
+                <li>下载后重命名并放到小程序对应目录</li>
+            </ol>
+        </div>
+        
+        <div class="checklist">
+            <h3>✅ 图标下载清单</h3>
+            <div id="checklist"></div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">📱 TabBar 图标 (81×81)</h2>
+            <div class="icon-grid">
+                <div class="icon-card tabbar-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M5.00001 20.0001L24 4.00012L43 20.0001V42.0001C43 43.1047 42.1046 44.0001 41 44.0001H31V28.0001H17V44.0001H7.00001C5.89544 44.0001 5.00001 43.1047 5.00001 42.0001V20.0001Z" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">首页图标</div>
+                    <div class="icon-info">
+                        home.png / home-active.png<br>
+                        灰色 #999999 / 蓝色 #2C5F7C
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=home" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card tabbar-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M36 6H12C9.79086 6 8 7.79086 8 10V38C8 40.2091 9.79086 42 12 42H36C38.2091 42 40 40.2091 40 38V10C40 7.79086 38.2091 6 36 6Z" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18 16H30" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18 24H30" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18 32H24" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">资讯图标</div>
+                    <div class="icon-info">
+                        news.png / news-active.png<br>
+                        灰色 #999999 / 蓝色 #2C5F7C
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=news" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card tabbar-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M42 30C42 31.0609 41.5786 32.0783 40.8284 32.8284C40.0783 33.5786 39.0609 34 38 34H34L38 38V34H30C31.0609 34 32.0783 33.5786 32.8284 32.8284C33.5786 32.0783 34 31.0609 34 30V10C34 8.93913 33.5786 7.92172 32.8284 7.17157C32.0783 6.42143 31.0609 6 30 6H10C8.93913 6 7.92172 6.42143 7.17157 7.17157C6.42143 7.92172 6 8.93913 6 10V30C6 31.0609 6.42143 32.0783 7.17157 32.8284C7.92172 33.5786 8.93913 34 10 34H14V38L18 34H30" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">咨询图标</div>
+                    <div class="icon-info">
+                        consult.png / consult-active.png<br>
+                        灰色 #999999 / 蓝色 #2C5F7C
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=chat" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card tabbar-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M42 42V38C42 35.8783 41.1571 33.8434 39.6569 32.3431C38.1566 30.8429 36.1217 30 34 30H14C11.8783 30 9.84344 30.8429 8.34315 32.3431C6.84286 33.8434 6 35.8783 6 38V42" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="24" cy="14" r="8" stroke="#999999" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">我的图标</div>
+                    <div class="icon-info">
+                        user.png / user-active.png<br>
+                        灰色 #999999 / 蓝色 #2C5F7C
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=user" target="_blank" class="search-link">搜索图标</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎯 功能入口图标 (96×96)</h2>
+            <div class="icon-grid">
+                <div class="icon-card function-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M6 18L24 28L42 18M24 28V44M6 18V30C6 30 10 42 24 42C38 42 42 30 42 30V18" stroke="#2C5F7C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M24 4L4 14L24 24L44 14L24 4Z" stroke="#2C5F7C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">学校查询</div>
+                    <div class="icon-info">
+                        school.png<br>
+                        颜色: <span class="color-badge" style="background:#2C5F7C;"></span> #2C5F7C
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=school" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card function-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4V44" stroke="#52C41A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 14V34C4 34 8 44 24 44C40 44 44 34 44 34V14" stroke="#52C41A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 14C4 14 8 24 24 24C40 24 44 14 44 14" stroke="#52C41A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="24" cy="10" r="4" fill="#52C41A"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">专业查询</div>
+                    <div class="icon-info">
+                        major.png<br>
+                        颜色: <span class="color-badge" style="background:#52C41A;"></span> #52C41A
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=book" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card function-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M36 8H12C9.79086 8 8 9.79086 8 12V40C8 42.2091 9.79086 44 12 44H36C38.2091 44 40 42.2091 40 40V12C40 9.79086 38.2091 8 36 8Z" stroke="#FAAD14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 20H32" stroke="#FAAD14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 28H28" stroke="#FAAD14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 36H24" stroke="#FAAD14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">申请指导</div>
+                    <div class="icon-info">
+                        guide.png<br>
+                        颜色: <span class="color-badge" style="background:#FAAD14;"></span> #FAAD14
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=document" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card function-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M38 24C38 31.732 31.732 38 24 38C16.268 38 10 31.732 10 24C10 16.268 16.268 10 24 10C31.732 10 38 16.268 38 24Z" stroke="#FF4D4F" stroke-width="4"/>
+                            <path d="M34 34L42 42" stroke="#FF4D4F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">在线咨询</div>
+                    <div class="icon-info">
+                        consult2.png<br>
+                        颜色: <span class="color-badge" style="background:#FF4D4F;"></span> #FF4D4F
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=search" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card function-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M38 12V6H10V12" stroke="#722ED1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 12V42H42V12H6Z" stroke="#722ED1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 20H22" stroke="#722ED1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 28H26" stroke="#722ED1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 36H22" stroke="#722ED1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="34" cy="34" r="6" fill="#722ED1"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">成功案例</div>
+                    <div class="icon-info">
+                        case.png<br>
+                        颜色: <span class="color-badge" style="background:#722ED1;"></span> #722ED1
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=case" target="_blank" class="search-link">搜索图标</a>
+                </div>
+                
+                <div class="icon-card function-card">
+                    <div class="icon-preview">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4C15.7157 4 9 10.7157 9 19V25C9 25.5523 9.44772 26 10 26H16C16.5523 26 17 25.5523 17 25V19C17 15.134 20.134 12 24 12C27.866 12 31 15.134 31 19V25C31 25.5523 31.4477 26 32 26H38C38.5523 26 39 25.5523 39 25V19C39 10.7157 32.2843 4 24 4Z" stroke="#EB2F96" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 26V42" stroke="#EB2F96" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M34 26V42" stroke="#EB2F96" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 34C9 34 14 44 24 44C34 44 39 34 39 34" stroke="#EB2F96" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="icon-name">顾问团队</div>
+                    <div class="icon-info">
+                        consultant.png<br>
+                        颜色: <span class="color-badge" style="background:#EB2F96;"></span> #EB2F96
+                    </div>
+                    <a href="https://iconpark.oceanengine.com/search?q=people" target="_blank" class="search-link">搜索图标</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions" style="background: #fff7e6; border-left-color: #faad14;">
+            <h3>📂 文件放置位置</h3>
+            <ul>
+                <li><strong>TabBar 图标:</strong> images/tab/ 目录</li>
+                <li><strong>功能图标:</strong> images/icon/ 目录</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // 生成检查清单
+        const icons = [
+            'home.png', 'home-active.png',
+            'news.png', 'news-active.png',
+            'consult.png', 'consult-active.png',
+            'user.png', 'user-active.png',
+            'school.png', 'major.png', 'guide.png',
+            'consult2.png', 'case.png', 'consultant.png'
+        ];
+        
+        const checklist = document.getElementById('checklist');
+        icons.forEach(icon => {
+            const item = document.createElement('div');
+            item.className = 'checklist-item';
+            item.innerHTML = `
+                <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                <span>${icon}</span>
+            `;
+            checklist.appendChild(item);
+        });
+    </script>
+</body>
+</html>

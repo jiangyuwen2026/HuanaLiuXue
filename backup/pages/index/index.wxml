@@ -1,0 +1,152 @@
+<!-- 首页 -->
+<view class="page-container">
+  <!-- 顶部区域 -->
+  <view class="header-section">
+    <!-- 轮播图 -->
+    <swiper class="banner-swiper" 
+            indicator-dots="{{true}}" 
+            indicator-color="rgba(255,255,255,0.4)"
+            indicator-active-color="#FFFFFF"
+            autoplay="{{true}}" 
+            interval="{{5000}}" 
+            circular="{{true}}"
+            duration="{{500}}">
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <image class="banner-image" 
+               src="{{item.image}}" 
+               mode="aspectFill" 
+               bindtap="onBannerTap" 
+               data-id="{{item.id}}">
+        </image>
+        <view class="banner-overlay"></view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 功能入口 -->
+    <view class="function-section">
+      <view class="function-grid">
+        <view class="function-item" 
+              wx:for="{{functions}}" 
+              wx:key="id" 
+              bindtap="navigateTo" 
+              data-path="{{item.path}}">
+          <view class="function-icon-wrapper">
+            <image class="function-icon" src="{{item.icon}}" mode="aspectFit"></image>
+          </view>
+          <text class="function-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content-section">
+    <!-- 留学资讯 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">留学资讯</text>
+        <view class="more-link" bindtap="navigateTo" data-path="/pages/news/news">
+          <text>更多</text>
+          <text class="more-arrow">›</text>
+        </view>
+      </view>
+      
+      <view class="news-list">
+        <view class="news-item card" 
+              wx:for="{{newsList}}" 
+              wx:key="id" 
+              bindtap="navigateTo" 
+              data-path="/pages/news/detail/news-detail?id={{item.id}}">
+          <image class="news-cover" src="{{item.coverImage}}" mode="aspectFill"></image>
+          <view class="news-content">
+            <text class="news-title text-ellipsis-2">{{item.title}}</text>
+            <text class="news-summary text-ellipsis">{{item.summary}}</text>
+            <view class="news-footer">
+              <text class="news-tag tag-accent">{{item.country}}</text>
+              <text class="news-date">{{item.publishTime}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 成功案例 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">成功案例</text>
+        <view class="more-link" bindtap="navigateTo" data-path="/pages/case/case">
+          <text>更多</text>
+          <text class="more-arrow">›</text>
+        </view>
+      </view>
+
+      <scroll-view class="case-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+        <view class="case-item" 
+              wx:for="{{caseList}}" 
+              wx:key="id" 
+              bindtap="navigateTo" 
+              data-path="/pages/case/detail/case-detail?id={{item.id}}">
+          <view class="case-card">
+            <view class="case-header">
+              <text class="case-student">{{item.studentName}}</text>
+              <view class="case-status tag tag-success">
+                <text>{{item.result}}</text>
+              </view>
+            </view>
+            <view class="case-body">
+              <view class="case-info-row">
+                <text class="case-label">背景</text>
+                <text class="case-value text-ellipsis">{{item.background}}</text>
+              </view>
+              <view class="case-info-row">
+                <text class="case-label">目标</text>
+                <text class="case-value text-ellipsis">{{item.target}}</text>
+              </view>
+              <view class="case-highlight">
+                <text class="case-offer-label">录取</text>
+                <text class="case-offer-value">{{item.offer}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 顾问风采 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">顾问风采</text>
+        <view class="more-link" bindtap="navigateTo" data-path="/pages/consultant/consultant">
+          <text>更多</text>
+          <text class="more-arrow">›</text>
+        </view>
+      </view>
+
+      <scroll-view class="consultant-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+        <view class="consultant-item" 
+              wx:for="{{consultantList}}" 
+              wx:key="id" 
+              bindtap="navigateTo" 
+              data-path="/pages/consultant/detail/consultant-detail?id={{item.id}}">
+          <view class="consultant-avatar-wrapper">
+            <image class="consultant-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+            <view class="consultant-ring"></view>
+          </view>
+          <text class="consultant-name">{{item.name}}</text>
+          <text class="consultant-title">{{item.title}}</text>
+          <view class="consultant-action">
+            <text class="consultant-action-text">立即咨询</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+
+<!-- 浮动咨询按钮 -->
+<view class="fab" bindtap="navigateTo" data-path="/pages/appointment/appointment">
+  <view class="fab-button">
+    <image class="fab-icon" src="/images/icon/consult2.png" mode="aspectFit"></image>
+    <text class="fab-text">咨询</text>
+  </view>
+</view>

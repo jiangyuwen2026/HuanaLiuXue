@@ -1,0 +1,145 @@
+<!-- 学校查询列表页 -->
+<view class="page-container">
+  <!-- 搜索栏 -->
+  <view class="search-header">
+    <view class="search-bar">
+      <view class="search-input-wrapper">
+        <text class="search-icon-placeholder">🏫</text>
+        <input class="search-input" 
+               placeholder="搜索学校名称" 
+               placeholder-class="search-placeholder"
+               value="{{keyword}}" 
+               bindinput="onSearchInput" 
+               bindconfirm="onSearch" />
+      </view>
+      <text class="search-btn" bindtap="onSearch">搜索</text>
+    </view>
+  </view>
+
+  <!-- 国家筛选 -->
+  <view class="filter-container">
+    <scroll-view class="filter-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="filter-item {{selectedCountry === '' ? 'active' : ''}}" 
+            bindtap="onFilterCountry" 
+            data-country="">
+        全部
+      </view>
+      <view class="filter-item {{selectedCountry === '香港' ? 'active' : ''}}" 
+            bindtap="onFilterCountry" 
+            data-country="香港">
+        香港
+      </view>
+      <view class="filter-item {{selectedCountry === '新加坡' ? 'active' : ''}}" 
+            bindtap="onFilterCountry" 
+            data-country="新加坡">
+        新加坡
+      </view>
+      <view class="filter-item {{selectedCountry === '英国' ? 'active' : ''}}" 
+            bindtap="onFilterCountry" 
+            data-country="英国">
+        英国
+      </view>
+      <view class="filter-item {{selectedCountry === '澳大利亚' ? 'active' : ''}}" 
+            bindtap="onFilterCountry" 
+            data-country="澳大利亚">
+        澳大利亚
+      </view>
+      <view class="filter-item {{selectedCountry === '美国' ? 'active' : ''}}" 
+            bindtap="onFilterCountry" 
+            data-country="美国">
+        美国
+      </view>
+      <view class="filter-item {{selectedCountry === '加拿大' ? 'active' : ''}}" 
+            bindtap="onFilterCountry" 
+            data-country="加拿大">
+        加拿大
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 学校列表 -->
+  <view class="content-wrapper">
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading && schoolList.length === 0}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 学校列表 -->
+    <view class="school-list" wx:if="{{schoolList.length > 0}}">
+      <view class="school-item card" 
+            wx:for="{{schoolList}}" 
+            wx:key="id" 
+            bindtap="goToDetail" 
+            data-id="{{item.id}}">
+        <!-- 学校头部 -->
+        <view class="school-header">
+          <view class="school-name-row">
+            <text class="school-name">{{item.name}}</text>
+            <view class="school-ranking" wx:if="{{item.ranking}}">
+              <text class="ranking-label">排名</text>
+              <text class="ranking-value">{{item.ranking}}</text>
+            </view>
+          </view>
+          <view class="school-badges">
+            <text class="badge-country tag tag-primary">{{item.country}}</text>
+            <text class="badge-type tag tag-neutral">{{item.type}}</text>
+          </view>
+        </view>
+
+        <!-- 学校信息 -->
+        <view class="school-info">
+          <view class="info-row">
+            <text class="info-icon">📅</text>
+            <text class="info-text">成立于 {{item.founded}} 年</text>
+          </view>
+          <view class="info-row" wx:if="{{item.location}}">
+            <text class="info-icon">📍</text>
+            <text class="info-text">{{item.location}}</text>
+          </view>
+        </view>
+
+        <!-- 学校标签 -->
+        <view class="school-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+          <text class="school-tag" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">{{tag}}</text>
+        </view>
+
+        <!-- 学校底部 -->
+        <view class="school-footer" wx:if="{{item.majors && item.majors.length > 0}}">
+          <view class="major-info">
+            <text class="major-label">优势专业</text>
+            <text class="major-value text-ellipsis">{{item.majors.join('、')}}</text>
+          </view>
+          <view class="arrow-icon">
+            <text>›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{schoolList.length === 0 && !loading}}">
+      <view class="empty-icon-wrapper">
+        <text class="empty-icon-text">🏫</text>
+      </view>
+      <text class="empty-title">暂无相关学校</text>
+      <text class="empty-desc">换个关键词试试看</text>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{hasMore && !loading && schoolList.length > 0}}">
+      <text>上拉加载更多</text>
+    </view>
+    <view class="no-more" wx:if="{{!hasMore && schoolList.length > 0}}">
+      <text>已经到底了</text>
+    </view>
+  </view>
+</view>
+
+<!-- 浮动咨询按钮 -->
+<view class="fab" bindtap="navigateTo" data-path="/pages/appointment/appointment">
+  <view class="fab-button">
+    <image class="fab-icon" src="/images/icon/consult2.png" mode="aspectFit"></image>
+    <text class="fab-text">咨询</text>
+  </view>
+</view>

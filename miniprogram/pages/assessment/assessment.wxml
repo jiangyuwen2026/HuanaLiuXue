@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="form-section">
+    <input placeholder="您的姓名" bindinput="onInput" data-field="name" />
+    <input placeholder="手机号" type="number" bindinput="onInput" data-field="phone" />
+    <picker bindchange="onCountryChange" value="{{countryIndex}}" range="{{countries}}">
+      <view class="picker">目标国家: {{targetCountry}}</view>
+    </picker>
+    <button bindtap="submitAssessment">提交评估</button>
+  </view>
+</view>

@@ -1,0 +1,222 @@
+/* pages/test/test.wxss */
+.test-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20rpx;
+}
+
+/* 标题栏 */
+.header {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(24, 144, 255, 0.15);
+}
+
+.title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 操作区 */
+.actions {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.action-item {
+  margin-bottom: 20rpx;
+}
+
+.action-item:last-child {
+  margin-bottom: 0;
+}
+
+.action-row {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.action-row:last-child {
+  margin-bottom: 0;
+}
+
+.action-row button {
+  flex: 1;
+}
+
+/* 摘要区 */
+.summary {
+  display: flex;
+  justify-content: space-around;
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120rpx;
+}
+
+.summary-item .label {
+  font-size: 24rpx;
+  color: #999999;
+  margin-bottom: 10rpx;
+}
+
+.summary-item .value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.summary-item.success .value {
+  color: #52c41a;
+}
+
+.summary-item.error .value {
+  color: #ff4d4f;
+}
+
+/* 结果列表 */
+.results {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.result-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.result-item {
+  background: #fafafa;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border-left: 4rpx solid #d9d9d9;
+}
+
+.result-item.success {
+  border-left-color: #52c41a;
+  background: #f6ffed;
+}
+
+.result-item.error {
+  border-left-color: #ff4d4f;
+  background: #fff1f0;
+}
+
+.result-item:last-child {
+  margin-bottom: 0;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.result-icon {
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.result-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.result-duration {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.result-error {
+  background: rgba(255, 77, 79, 0.1);
+  border-radius: 4rpx;
+  padding: 15rpx;
+  margin-top: 10rpx;
+}
+
+.error-label {
+  font-size: 24rpx;
+  color: #ff4d4f;
+  font-weight: bold;
+  margin-right: 10rpx;
+}
+
+.error-message {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 空状态 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.loading text {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 按钮样式优化 */
+button {
+  border-radius: 8rpx;
+}
+
+button[type="primary"] {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+}
+
+button[disabled] {
+  opacity: 0.6;
+}

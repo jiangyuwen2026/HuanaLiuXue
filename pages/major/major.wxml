@@ -1,0 +1,49 @@
+<!-- 专业查询列表页 -->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索专业名称" value="{{keyword}}" bindinput="onSearchInput" />
+    <text class="search-btn" bindtap="onSearch">搜索</text>
+  </view>
+
+  <!-- 专业分类 -->
+  <view class="category-grid">
+    <view class="category-item {{selectedCategory === '' ? 'active' : ''}}" bindtap="onFilterCategory" data-category="">
+      全部
+    </view>
+    <view class="category-item {{selectedCategory === '商科' ? 'active' : ''}}" bindtap="onFilterCategory" data-category="商科">
+      商科
+    </view>
+    <view class="category-item {{selectedCategory === '工科' ? 'active' : ''}}" bindtap="onFilterCategory" data-category="工科">
+      工科
+    </view>
+    <view class="category-item {{selectedCategory === '理科' ? 'active' : ''}}" bindtap="onFilterCategory" data-category="理科">
+      理科
+    </view>
+    <view class="category-item {{selectedCategory === '文科' ? 'active' : ''}}" bindtap="onFilterCategory" data-category="文科">
+      文科
+    </view>
+    <view class="category-item {{selectedCategory === '艺术' ? 'active' : ''}}" bindtap="onFilterCategory" data-category="艺术">
+      艺术
+    </view>
+  </view>
+
+  <!-- 专业列表 -->
+  <view class="major-list">
+    <view class="major-item card" wx:for="{{majorList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="major-header">
+        <text class="major-name">{{item.name}}</text>
+        <text class="major-category tag tag-primary">{{item.category}}</text>
+      </view>
+      <text class="major-school">开设院校：{{item.schools}}</text>
+      <view class="major-footer">
+        <text class="footer-info">就业方向：{{item.career}}</text>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{majorList.length === 0}}">
+      <text class="empty-text">暂无相关专业</text>
+    </view>
+  </view>
+</view>

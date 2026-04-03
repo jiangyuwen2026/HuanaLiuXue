@@ -1,0 +1,214 @@
+<!-- 优化后的预约咨询页面 -->
+<view class="page-container">
+  
+  <!-- 页面标题区 -->
+  <view class="page-header">
+    <text class="header-title">预约咨询</text>
+    <text class="header-subtitle">专业顾问一对一服务</text>
+  </view>
+
+  <!-- 主内容区 -->
+  <view class="content-wrapper">
+    
+    <!-- 步骤指示器 -->
+    <view class="step-indicator">
+      <view class="step-item {{currentStep >= 1 ? 'active' : ''}}">
+        <view class="step-num">1</view>
+        <text class="step-text">选顾问</text>
+      </view>
+      <view class="step-line"></view>
+      <view class="step-item {{currentStep >= 2 ? 'active' : ''}}">
+        <view class="step-num">2</view>
+        <text class="step-text">填信息</text>
+      </view>
+    </view>
+
+    <!-- 顾问选择区 -->
+    <view class="section-block">
+      <view class="section-title">
+        <text class="title-icon">👨‍💼</text>
+        <text class="title-text">选择顾问</text>
+        <text class="title-required">*</text>
+      </view>
+      
+      <!-- 加载中 -->
+      <view class="loading-consultants" wx:if="{{loadingConsultants}}">
+        <view class="loading-spinner-small"></view>
+        <text class="loading-text-small">加载顾问中...</text>
+      </view>
+      
+      <!-- 顾问横向滚动列表 -->
+      <scroll-view class="consultant-scroll" scroll-x="{{true}}" enhanced show-scrollbar="{{false}}" wx:if="{{!loadingConsultants}}">
+        <view class="consultant-list">
+          <view 
+            class="consultant-card {{selectedConsultant && selectedConsultant.id === item.id ? 'selected' : ''}}"
+            wx:for="{{consultantList}}"
+            wx:key="id"
+            bindtap="selectConsultant"
+            data-item="{{item}}"
+          >
+            <view class="avatar-wrap">
+              <image class="consultant-avatar" src="{{item.avatar}}" mode="aspectFill"/>
+              <view class="selected-badge" wx:if="{{selectedConsultant && selectedConsultant.id === item.id}}">
+                <text class="badge-icon">✓</text>
+              </view>
+            </view>
+            <view class="consultant-info">
+              <text class="consultant-name">{{item.name}}</text>
+              <text class="consultant-title">{{item.title}}</text>
+              <view class="consultant-tags">
+                <text class="tag">{{item.specialties}}</text>
+              </view>
+              <view class="consultant-meta">
+                <text class="meta-item">{{item.experience}}</text>
+                <text class="meta-dot">·</text>
+                <text class="meta-item">{{item.cases}}+案例</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 当前选中顾问展示 -->
+      <view class="selected-consultant-bar" wx:if="{{selectedConsultant}}">
+        <image class="selected-avatar" src="{{selectedConsultant.avatar}}" mode="aspectFill"/>
+        <view class="selected-info">
+          <text class="selected-name">已选择：{{selectedConsultant.name}}</text>
+          <text class="selected-title">{{selectedConsultant.title}} · {{selectedConsultant.specialties}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 咨询类型 -->
+    <view class="section-block">
+      <view class="section-title">
+        <text class="title-icon">💬</text>
+        <text class="title-text">咨询类型</text>
+      </view>
+      <view class="type-grid four-cols">
+        <view 
+          class="type-card {{selectedType === item.id ? 'selected' : ''}}"
+          wx:for="{{consultTypes}}"
+          wx:key="id"
+          bindtap="onSelectType"
+          data-type="{{item.id}}"
+        >
+          <view class="type-icon">{{item.icon}}</view>
+          <text class="type-name">{{item.name}}</text>
+          <text class="type-desc">{{item.desc}}</text>
+          <view class="type-check" wx:if="{{selectedType === item.id}}">✓</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 预约时间 -->
+    <view class="section-block">
+      <view class="section-title">
+        <text class="title-icon">📅</text>
+        <text class="title-text">预约时间</text>
+        <text class="title-required">*</text>
+      </view>
+      
+      <!-- 日期选择 -->
+      <view class="date-section">
+        <text class="subsection-label">选择日期</text>
+        <scroll-view class="date-scroll" scroll-x="{{true}}" enhanced show-scrollbar="{{false}}">
+          <view class="date-list">
+            <view 
+              class="date-item {{selectedDate === item.fullDate ? 'selected' : ''}}"
+              wx:for="{{dateList}}"
+              wx:key="fullDate"
+              bindtap="onSelectDate"
+              data-date="{{item.fullDate}}"
+            >
+              <text class="date-weekday">{{item.weekday}}</text>
+              <text class="date-day">{{item.day}}</text>
+              <text class="date-month">{{item.month}}月</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 时间选择 -->
+      <view class="time-section">
+        <text class="subsection-label">选择时间段</text>
+        <view class="time-grid">
+          <view 
+            class="time-item {{selectedTime === item.time ? 'selected' : ''}} {{!item.available ? 'disabled' : ''}}"
+            wx:for="{{timeList}}"
+            wx:key="time"
+            bindtap="onSelectTime"
+            data-time="{{item.time}}"
+            data-available="{{item.available}}"
+          >
+            <text class="time-text">{{item.time}}</text>
+            <text class="time-status" wx:if="{{!item.available}}">已满</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 联系信息 -->
+    <view class="section-block">
+      <view class="section-title">
+        <text class="title-icon">📝</text>
+        <text class="title-text">联系信息</text>
+        <text class="title-required">*</text>
+      </view>
+      
+      <view class="form-group">
+        <view class="form-item">
+          <text class="form-label">您的姓名</text>
+          <input 
+            class="form-input" 
+            placeholder="请输入姓名"
+            value="{{name}}"
+            bindinput="onNameInput"
+          />
+        </view>
+        <view class="form-item">
+          <text class="form-label">手机号码</text>
+          <input 
+            class="form-input" 
+            type="number"
+            placeholder="请输入手机号"
+            value="{{phone}}"
+            bindinput="onPhoneInput"
+          />
+        </view>
+        <view class="form-item">
+          <text class="form-label">咨询需求</text>
+          <textarea 
+            class="form-textarea" 
+            placeholder="请简要描述您的留学需求、目标国家、专业方向等..."
+            value="{{requirement}}"
+            bindinput="onRequirementInput"
+            maxlength="200"
+          />
+          <text class="char-count">{{requirement.length}}/200</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-spacer"></view>
+
+  <!-- 底部提交栏 -->
+  <view class="submit-bar">
+    <view class="price-section">
+      <text class="price-label">咨询类型</text>
+      <text class="price-value type-name">{{selectedType}}</text>
+    </view>
+    <button 
+      class="submit-btn {{!canSubmit ? 'disabled' : ''}}"
+      bindtap="submitAppointment"
+      disabled="{{submitting}}"
+    >
+      <text wx:if="{{submitting}}">提交中...</text>
+      <text wx:else>确认预约</text>
+    </button>
+  </view>
+
+</view>

@@ -1,0 +1,98 @@
+<!-- 案例详情页 -->
+<view class="container">
+  <!-- 学生信息 -->
+  <view class="student-header card">
+    <view class="student-avatar">
+      <text class="avatar-text">{{case.studentName.charAt(0)}}</text>
+    </view>
+    <view class="student-info">
+      <text class="student-name">{{case.studentName}}</text>
+      <text class="student-degree tag tag-primary">{{case.degree}}</text>
+    </view>
+    <view class="case-result">
+      <text class="result-label">录取结果</text>
+      <text class="result-text text-success">{{case.result}}</text>
+    </view>
+  </view>
+
+  <!-- 录取院校 -->
+  <view class="section card">
+    <view class="section-title">录取院校</view>
+    <view class="offer-card">
+      <text class="offer-school">{{case.offerSchool}}</text>
+      <text class="offer-major">{{case.offerMajor}}</text>
+      <view class="offer-tags">
+        <text class="tag tag-success">QS排名{{case.qsRank}}</text>
+        <text class="tag tag-primary">{{case.country}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 申请背景 -->
+  <view class="section card">
+    <view class="section-title">申请背景</view>
+    <view class="background-list">
+      <view class="bg-item">
+        <text class="bg-label">本科院校</text>
+        <text class="bg-value">{{case.background}}</text>
+      </view>
+      <view class="bg-item">
+        <text class="bg-label">申请专业</text>
+        <text class="bg-value">{{case.major}}</text>
+      </view>
+      <view class="bg-item">
+        <text class="bg-label">GPA/成绩</text>
+        <text class="bg-value">{{case.gpa}}</text>
+      </view>
+      <view class="bg-item">
+        <text class="bg-label">语言成绩</text>
+        <text class="bg-value">{{case.language}}</text>
+      </view>
+      <view class="bg-item">
+        <text class="bg-label">GRE/GMAT</text>
+        <text class="bg-value">{{case.gre || '无'}}</text>
+      </view>
+      <view class="bg-item">
+        <text class="bg-label">实习/科研</text>
+        <text class="bg-value">{{case.experience}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 申请故事 -->
+  <view class="section card">
+    <view class="section-title">申请故事</view>
+    <text class="story-content">{{case.story}}</text>
+  </view>
+
+  <!-- 申请材料 -->
+  <view class="section card">
+    <view class="section-title">申请材料</view>
+    <view class="material-list">
+      <text class="material-item" wx:for="{{case.materials}}" wx:key="*this">
+        ✓ {{item}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 顾问点评 -->
+  <view class="section card">
+    <view class="section-title">顾问点评</view>
+    <view class="consultant-review">
+      <view class="reviewer-info">
+        <image class="reviewer-avatar" src="{{case.consultant.avatar}}" mode="aspectFill"></image>
+        <view class="reviewer-details">
+          <text class="reviewer-name">{{case.consultant.name}}</text>
+          <text class="reviewer-title">{{case.consultant.title}}</text>
+        </view>
+      </view>
+      <text class="review-content">{{case.review}}</text>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-bar">
+    <button class="action-btn btn-outline" bindtap="shareCase">分享案例</button>
+    <button class="action-btn" bindtap="makeAppointment">预约咨询</button>
+  </view>
+</view>

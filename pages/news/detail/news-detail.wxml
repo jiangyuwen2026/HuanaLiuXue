@@ -1,0 +1,68 @@
+<!-- 资讯详情页 -->
+<view class="container">
+  
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 文章内容 -->
+  <block wx:if="{{!loading && article}}">
+    <!-- 文章头图 -->
+    <image 
+      class="article-cover" 
+      src="{{article.coverImage}}" 
+      mode="aspectFill"
+      binderror="onImageError"
+    ></image>
+
+    <!-- 文章信息 -->
+    <view class="article-info">
+      <text class="article-title">{{article.title}}</text>
+      <view class="article-meta">
+        <text class="meta-tag">{{article.category}}</text>
+        <text class="meta-time">{{article.publishTime}}</text>
+        <text class="meta-views">{{article.views}} 阅读</text>
+      </view>
+    </view>
+
+    <!-- 文章内容 -->
+    <view class="article-content">
+      <rich-text nodes="{{article.content}}"></rich-text>
+    </view>
+
+    <!-- 相关推荐 -->
+    <view class="related-section" wx:if="{{relatedArticles.length > 0}}">
+      <view class="section-title">相关推荐</view>
+      <view 
+        class="related-item" 
+        wx:for="{{relatedArticles}}" 
+        wx:key="id" 
+        bindtap="goToRelated" 
+        data-id="{{item.id}}"
+      >
+        <text class="related-title">{{item.title}}</text>
+        <text class="related-time">{{item.publishTime}}</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar" wx:if="{{!loading && article}}">
+    <view class="action-item" bindtap="toggleCollect">
+      <view class="action-icon-wrap">
+        <text class="action-icon-text">{{article.isCollected ? '★' : '☆'}}</text>
+      </view>
+      <text class="action-text">{{article.isCollected ? '已收藏' : '收藏'}}</text>
+    </view>
+    <button class="action-item share-btn" open-type="share">
+      <view class="action-icon-wrap">
+        <text class="action-icon-text">⇧</text>
+      </view>
+      <text class="action-text">分享</text>
+    </button>
+    <view class="consult-btn" bindtap="goToConsult">立即咨询</view>
+  </view>
+
+</view>

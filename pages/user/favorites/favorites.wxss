@@ -1,0 +1,292 @@
+/* 我的收藏页面样式 */
+
+.container {
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+/* 页面头部 */
+.page-header {
+  background: linear-gradient(135deg, #2C5F7C 0%, #1e4155 100%);
+  padding: 40rpx 30rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* 标签切换 */
+.tab-section {
+  display: flex;
+  background: #fff;
+  padding: 20rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  gap: 20rpx;
+}
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 32rpx;
+  position: relative;
+  background: #f5f5f5;
+  border-radius: 32rpx;
+}
+
+.tab-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.tab-item.active .tab-text {
+  color: #fff;
+  font-weight: 500;
+}
+
+.tab-item.active {
+  background: #2C5F7C;
+}
+
+.tab-item.active::after {
+  display: none;
+}
+
+.tab-badge {
+  min-width: 32rpx;
+  height: 32rpx;
+  background: #ff4d4f;
+  color: #fff;
+  font-size: 20rpx;
+  border-radius: 16rpx;
+  padding: 0 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8rpx;
+}
+
+/* 加载状态 */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #f0f0f0;
+  border-top-color: #2C5F7C;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 内容区域 */
+.content-section {
+  padding: 20rpx 30rpx;
+}
+
+/* 收藏列表 */
+.favorite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.favorite-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+}
+
+/* 院校卡片 */
+.school-card .school-logo {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 24rpx;
+  background: #f0f0f0;
+}
+
+.school-card .school-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.school-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.school-ranking {
+  font-size: 24rpx;
+  color: #2C5F7C;
+  margin-bottom: 6rpx;
+}
+
+.school-country {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 案例卡片 */
+.case-card {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.case-header {
+  margin-bottom: 16rpx;
+}
+
+.case-tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  background: #e6f7ff;
+  color: #1890ff;
+  font-size: 22rpx;
+  border-radius: 8rpx;
+}
+
+.case-body {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20rpx;
+}
+
+.case-student {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.case-school {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 6rpx;
+}
+
+.case-major {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 资讯卡片 */
+.news-card {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.news-content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20rpx;
+}
+
+.news-tag {
+  display: inline-block;
+  padding: 4rpx 12rpx;
+  background: #f6ffed;
+  color: #52c41a;
+  font-size: 22rpx;
+  border-radius: 4rpx;
+  margin-bottom: 12rpx;
+  align-self: flex-start;
+}
+
+.news-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 12rpx;
+}
+
+.news-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 操作区域 */
+.action-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 160rpx 60rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 32rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.btn-primary {
+  width: 320rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2C5F7C 0%, #1e4155 100%);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 500;
+  border-radius: 40rpx;
+  border: none;
+}
+
+.btn-primary::after {
+  border: none;
+}

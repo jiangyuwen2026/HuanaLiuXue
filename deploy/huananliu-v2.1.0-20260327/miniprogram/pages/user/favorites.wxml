@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="empty-state" wx:if="{{!loading && favorites.length === 0}}">
+    <image class="empty-icon" src="/images/icon/empty.png" mode="aspectFit" />
+    <text class="empty-text">暂无收藏</text>
+    <text class="empty-tip">收藏感兴趣的学校、案例和资讯</text>
+  </view>
+  
+  <view class="favorites-list" wx:else>
+    <view class="favorite-item" wx:for="{{favorites}}" wx:key="id">
+      <text>{{item.title}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,29 @@
+# 微信小程序
+.DS_Store
+node_modules/
+dist/
+
+# 微信开发者工具
+project.private.config.json
+
+# 图片资源
+images/**/*.*
+!images/.gitkeep
+
+# 日志文件
+*.log
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
+
+# IDE配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+Thumbs.db

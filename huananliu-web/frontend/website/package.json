@@ -1,0 +1,40 @@
+{
+  "name": "huananliu-website",
+  "version": "1.0.0-FINAL",
+  "_version_info": {
+    "release_date": "2026-03-25",
+    "status": "FROZEN",
+    "description": "华南留学官网前端 - 冻结版本",
+    "features": [
+      "学校展示系统",
+      "案例展示系统",
+      "顾问展示系统",
+      "新闻资讯系统",
+      "服务展示系统",
+      "留学评估表单",
+      "用户评价轮播",
+      "明星案例展示"
+    ]
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dompurify": "^3.3.3",
+    "marked": "^11.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "vite": "^5.0.7"
+  }
+}

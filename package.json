@@ -1,0 +1,23 @@
+{
+  "name": "huananliuxue-miniprogram",
+  "version": "1.0.0",
+  "description": "华南留学微信小程序",
+  "main": "app.js",
+  "scripts": {
+    "dev": "echo '请在微信开发者工具中打开项目'",
+    "build": "echo '请在微信开发者工具中上传代码'"
+  },
+  "keywords": [
+    "留学",
+    "微信小程序",
+    "华南留学"
+  ],
+  "author": "华南留学",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "学校查询",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

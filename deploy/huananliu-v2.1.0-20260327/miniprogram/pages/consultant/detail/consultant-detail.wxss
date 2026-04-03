@@ -1,0 +1,213 @@
+/* 顾问详情页样式 */
+.container {
+  padding-bottom: 120rpx;
+}
+
+/* 顾问头部 */
+.consultant-header {
+  position: relative;
+  background-color: #fff;
+  padding-bottom: 30rpx;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200rpx;
+  background: linear-gradient(135deg, #1890ff, #096dd9);
+  opacity: 0.1;
+}
+
+.header-content {
+  position: relative;
+  padding: 120rpx 30rpx 0;
+  text-align: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20rpx;
+}
+
+.consultant-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.consultant-badge {
+  position: absolute;
+  bottom: 8rpx;
+  right: 8rpx;
+  padding: 6rpx 16rpx;
+  background: linear-gradient(135deg, #ff4d4f, #f5222d);
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 12rpx;
+}
+
+.consultant-name {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.consultant-title {
+  display: block;
+  font-size: 28rpx;
+  color: #1890ff;
+  margin-bottom: 30rpx;
+}
+
+.consultant-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 40rpx;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 60rpx;
+  background-color: #e8e8e8;
+}
+
+/* 通用区块 */
+.section {
+  margin: 0 30rpx 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.section-content {
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: #666;
+}
+
+/* 专长领域 */
+.expertise-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.tag {
+  padding: 8rpx 16rpx;
+  border-radius: 4rpx;
+  font-size: 24rpx;
+}
+
+.tag-primary {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+/* 服务项目 */
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.service-item:last-child {
+  border-bottom: none;
+}
+
+.service-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.service-check {
+  font-size: 28rpx;
+  color: #52c41a;
+}
+
+/* 工作时间 */
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-day {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.schedule-time {
+  font-size: 28rpx;
+  color: #666;
+}
+
+/* 底部操作 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 20rpx;
+  padding: 16rpx 30rpx;
+  background-color: #fff;
+  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.08);
+}
+
+.action-btn {
+  flex: 1;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  font-size: 28rpx;
+  border-radius: 36rpx;
+  border: none;
+}

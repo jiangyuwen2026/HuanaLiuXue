@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="appointment-list">
+    <view class="appointment-item card" wx:for="{{appointmentList}}" wx:key="id">
+      <view class="appointment-header">
+        <text class="consultant-name">{{item.consultant_name}}</text>
+        <text class="appointment-status {{item.status}}">{{item.status_text}}</text>
+      </view>
+      <view class="appointment-info">
+        <text>预约时间: {{item.dateTime}}</text>
+        <text>联系人: {{item.name}} {{item.phone}}</text>
+      </view>
+      <button wx:if="{{item.status === 'pending'}}" class="cancel-btn" bindtap="cancelAppointment" data-id="{{item.id}}">取消预约</button>
+    </view>
+  </view>
+  
+  <view class="empty-state" wx:if="{{!loading && appointmentList.length === 0}}">
+    <text>暂无预约记录</text>
+    <button class="primary-btn" bindtap="rebook">立即预约</button>
+  </view>
+</view>

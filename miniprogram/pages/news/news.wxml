@@ -1,0 +1,48 @@
+<!-- 资讯列表页 -->
+<view class="container">
+  
+  <!-- 分类筛选 -->
+  <scroll-view class="filter-bar" scroll-x="{{true}}" show-scrollbar="{{false}}">
+    <view 
+      class="filter-item {{selectedCategory === (category === '全部' ? '' : category) ? 'active' : ''}}"
+      wx:for="{{categoryList}}"
+      wx:key="*this"
+      bindtap="onFilterCategory"
+      data-category="{{item}}"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+
+  <!-- 资讯列表 -->
+  <view class="news-list">
+    <view 
+      class="news-item card"
+      wx:for="{{newsList}}"
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <image class="news-cover" src="{{item.cover_image}}" mode="aspectFill" lazy-load />
+      <view class="news-content">
+        <view class="news-meta">
+          <text class="news-category" wx:if="{{item.category}}">{{item.category}}</text>
+          <text class="news-date">{{item.publishTime}}</text>
+        </view>
+        <text class="news-title">{{item.title}}</text>
+        <text class="news-summary">{{item.summary}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore && newsList.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+  <view class="empty-state" wx:if="{{!loading && newsList.length === 0}}">
+    <text>暂无资讯数据</text>
+  </view>
+</view>

@@ -1,0 +1,148 @@
+<!-- ============================================================================
+  华南留学小程序 - 首页模板 v2.0
+  说明: 对接官网后台数据，动态展示内容
+============================================================================ -->
+
+<view class="container">
+  
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+  
+  <!-- 主内容 -->
+  <block wx:else>
+    
+    <!-- ==================== Banner轮播图 ==================== -->
+    <!-- 数据来源: 后台 Banner管理 -->
+    <view class="banner-section" wx:if="{{banners.length > 0}}">
+      <swiper 
+        class="banner-swiper" 
+        indicator-dots="{{true}}" 
+        autoplay="{{true}}" 
+        interval="5000" 
+        duration="500"
+        circular="{{true}}"
+        bindchange="onBannerChange"
+      >
+        <swiper-item wx:for="{{banners}}" wx:key="id" bindtap="onBannerTap" data-index="{{index}}">
+          <image class="banner-image" src="{{item.image}}" mode="aspectFill" lazy-load />
+        </swiper-item>
+      </swiper>
+    </view>
+    
+    <!-- ==================== 快捷入口 (8宫格) ==================== -->
+    <view class="quick-entry-section">
+      <view class="quick-entry-grid">
+        <view 
+          class="quick-entry-item" 
+          wx:for="{{quickEntries}}" 
+          wx:key="id"
+          bindtap="onQuickEntryTap"
+          data-item="{{item}}"
+        >
+          <image class="quick-entry-icon" src="{{item.icon}}" mode="aspectFit" />
+          <text class="quick-entry-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- ==================== 明星案例 ==================== -->
+    <!-- 数据来源: 后台 案例管理-设为明星 -->
+    <view class="section featured-section" wx:if="{{featuredCases.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">⭐ 明星案例</text>
+        <text class="section-more" bindtap="onMoreCasesTap">更多 ></text>
+      </view>
+      
+      <scroll-view class="featured-scroll" scroll-x="{{true}}" enhanced show-scrollbar="{{false}}">
+        <view class="featured-list">
+          <view 
+            class="featured-card" 
+            wx:for="{{featuredCases}}" 
+            wx:key="id"
+            bindtap="onFeaturedCaseTap"
+            data-id="{{item.id}}"
+          >
+            <!-- 背景渐变 -->
+            <view class="featured-bg" style="background: linear-gradient(135deg, {{item.feature_bg}});"></view>
+            
+            <view class="featured-content">
+              <!-- 亮点标签 -->
+              <view class="featured-tag" wx:if="{{item.feature_highlight}}">
+                {{item.feature_highlight}}
+              </view>
+              
+              <!-- 学生信息 -->
+              <view class="featured-student">
+                <text class="student-name">{{item.student_name}}</text>
+                <text class="school-name" wx:if="{{item.school}}">{{item.school.name_cn}}</text>
+              </view>
+              
+              <!-- 录取专业 -->
+              <view class="featured-major" wx:if="{{item.major}}">
+                {{item.major}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    
+    <!-- ==================== 热门学校 ==================== -->
+    <!-- 数据来源: 后台 学校管理-热门学校 -->
+    <view class="section schools-section" wx:if="{{hotSchools.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">🏫 热门名校</text>
+        <text class="section-more" bindtap="onMoreSchoolsTap">更多 ></text>
+      </view>
+      
+      <scroll-view class="schools-scroll" scroll-x="{{true}}" enhanced show-scrollbar="{{false}}">
+        <view class="schools-list">
+          <view 
+            class="school-card" 
+            wx:for="{{hotSchools}}" 
+            wx:key="id"
+            bindtap="onHotSchoolTap"
+            data-id="{{item.id}}"
+          >
+            <image class="school-logo" src="{{item.logo}}" mode="aspectFit" lazy-load />
+            <text class="school-name">{{item.name}}</text>
+            <text class="school-country" wx:if="{{item.country}}">{{item.country}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    
+    <!-- ==================== 推荐资讯 ==================== -->
+    <!-- 数据来源: 后台 新闻管理-推荐到首页 -->
+    <view class="section news-section" wx:if="{{recommendedNews.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">📰 推荐资讯</text>
+        <text class="section-more" bindtap="onMoreNewsTap">更多 ></text>
+      </view>
+      
+      <view class="news-list">
+        <view 
+          class="news-item" 
+          wx:for="{{recommendedNews}}" 
+          wx:key="id"
+          bindtap="onNewsTap"
+          data-id="{{item.id}}"
+        >
+          <image class="news-cover" src="{{item.cover_image}}" mode="aspectFill" lazy-load />
+          <view class="news-content">
+            <view class="news-meta">
+              <text class="news-category" wx:if="{{item.category}}">{{item.category}}</text>
+              <text class="news-date">{{item.published_at}}</text>
+            </view>
+            <text class="news-title">{{item.title}}</text>
+            <text class="news-summary">{{item.summary}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+  </block>
+</view>

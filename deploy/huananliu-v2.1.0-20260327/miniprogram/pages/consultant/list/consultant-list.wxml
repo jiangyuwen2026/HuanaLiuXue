@@ -1,0 +1,35 @@
+<!-- 顾问列表页 -->
+<view class="container">
+  
+  <!-- 顾问列表 -->
+  <view class="consultant-list">
+    <view 
+      class="consultant-item card"
+      wx:for="{{consultantList}}"
+      wx:key="id"
+    >
+      <image class="consultant-avatar" src="{{item.avatar || '/images/default-avatar.png'}}" mode="aspectFill" lazy-load />
+      <view class="consultant-info">
+        <text class="consultant-name">{{item.name}}</text>
+        <text class="consultant-title">{{item.title || '留学顾问'}}</text>
+        <text class="consultant-specialty" wx:if="{{item.specialties}}">专长：{{item.specialties}}</text>
+        <text class="consultant-cases" wx:if="{{item.success_cases}}">成功案例：{{item.success_cases}}个</text>
+      </view>
+      <view class="consultant-actions">
+        <button class="btn-primary btn-sm" bindtap="consultNow" data-item="{{item}}">咨询</button>
+        <button class="btn-default btn-sm" bindtap="goToDetail" data-id="{{item.id}}">详情</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore && consultantList.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+  <view class="empty-state" wx:if="{{!loading && consultantList.length === 0}}">
+    <text>暂无顾问数据</text>
+  </view>
+</view>

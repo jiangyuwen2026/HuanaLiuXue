@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TabBar图标生成工具 - 华南留学</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .intro {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .icon-card {
+      border: 2px solid #e8e8e8;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .icon-card:hover {
+      border-color: #1890ff;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(24, 144, 255, 0.2);
+    }
+    .icon-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .icon-preview {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .icon-box {
+      text-align: center;
+    }
+    .icon-box svg {
+      width: 81px;
+      height: 81px;
+      display: block;
+    }
+    .icon-label {
+      font-size: 14px;
+      color: #999;
+      margin-top: 8px;
+    }
+    .download-section {
+      text-align: center;
+      background: #f5f5f5;
+      padding: 30px;
+      border-radius: 15px;
+    }
+    .download-section h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .download-btn {
+      background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 10px;
+    }
+    .download-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(24, 144, 255, 0.4);
+    }
+    .download-all-btn {
+      background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+      font-size: 18px;
+      padding: 18px 50px;
+    }
+    .instructions {
+      margin-top: 30px;
+      text-align: center;
+      color: #666;
+      line-height: 1.8;
+    }
+    .instructions h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .instructions ol {
+      text-align: left;
+      display: inline-block;
+      margin: 20px 0;
+    }
+    .instructions li {
+      margin: 10px 0;
+      color: #666;
+    }
+    .download-indicator {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #52c41a;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: none;
+    }
+    .download-indicator.show {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="download-indicator" id="downloadIndicator">✅ 下载成功！</div>
+
+  <div class="container">
+    <h1>🎨 TabBar图标生成工具</h1>
+    <p class="intro">
+      华南留学小程序 - 智能生成所有TabBar图标<br>
+      支持直接下载PNG文件，无需设计软件
+    </p>
+
+    <div class="icons-grid">
+      <!-- 首页图标 -->
+      <div class="icon-card">
+        <div class="icon-title">首页</div>
+        <div class="icon-preview">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H15V16H9V22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">未选中</div>
+          </div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H15V16H9V22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#1890ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">已选中</div>
+          </div>
+        </div>
+        <button class="download-btn" onclick="downloadIcon('home')">📥 下载首页图标</button>
+      </div>
+
+      <!-- 资讯图标 -->
+      <div class="icon-card">
+        <div class="icon-title">资讯</div>
+        <div class="icon-preview">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z M14 2V8H20 M16 13H8 M16 17H8 M10 9H8" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">未选中</div>
+          </div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z M14 2V8H20 M16 13H8 M16 17H8 M10 9H8" stroke="#1890ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">已选中</div>
+          </div>
+        </div>
+        <button class="download-btn" onclick="downloadIcon('news')">📥 下载资讯图标</button>
+      </div>
+
+      <!-- 咨询图标 -->
+      <div class="icon-card">
+        <div class="icon-title">咨询</div>
+        <div class="icon-preview">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H17L19 19V17H15C15.5304 17 16.0391 16.7893 16.4142 16.4142C16.7893 16.0391 17 15.5304 17 15V5C17 4.46957 16.7893 3.96086 16.4142 3.58579C16.0391 3.21071 15.5304 3 15 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V15C3 15.5304 3.21071 16.0391 3.58579 16.4142C3.96086 16.7893 4.46957 17 5 17H7V19L9 17H15" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">未选中</div>
+          </div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H17L19 19V17H15C15.5304 17 16.0391 16.7893 16.4142 16.4142C16.7893 16.0391 17 15.5304 17 15V5C17 4.46957 16.7893 3.96086 16.4142 3.58579C16.0391 3.21071 15.5304 3 15 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V15C3 15.5304 3.21071 16.0391 3.58579 16.4142C3.96086 16.7893 4.46957 17 5 17H7V19L9 17H15" stroke="#1890ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">已选中</div>
+          </div>
+        </div>
+        <button class="download-btn" onclick="downloadIcon('consult')">📥 下载咨询图标</button>
+      </div>
+
+      <!-- 我的图标 -->
+      <div class="icon-card">
+        <div class="icon-title">我的</div>
+        <div class="icon-preview">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="7" r="4" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">未选中</div>
+          </div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="#1890ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="7" r="4" stroke="#1890ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="icon-label">已选中</div>
+          </div>
+        </div>
+        <button class="download-btn" onclick="downloadIcon('user')">📥 下载我的图标</button>
+      </div>
+    </div>
+
+    <div class="download-section">
+      <h2>📥 批量下载所有图标</h2>
+      <button class="download-btn download-all-btn" onclick="downloadAllIcons()">⬇️ 下载全部8个图标</button>
+    </div>
+
+    <div class="instructions">
+      <h3>📋 使用说明</h3>
+      <ol>
+        <li>点击单个图标按钮或"下载全部"按钮</li>
+        <li>下载的PNG文件尺寸为 81×81px</li>
+        <li>将文件放到项目的 images/tab/ 目录</li>
+        <li>确保文件名与 app.json 中的配置一致</li>
+        <li>在微信开发者工具中重新编译项目</li>
+        <li>查看 TabBar 是否正确显示图标</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    // 图标SVG配置
+    const iconConfigs = {
+      home: {
+        path: 'M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H15V16H9V22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z',
+        viewBox: '0 0 24 24'
+      },
+      news: {
+        path: 'M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z M14 2V8H20 M16 13H8 M16 17H8 M10 9H8',
+        viewBox: '0 0 24 24'
+      },
+      consult: {
+        path: 'M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H17L19 19V17H15C15.5304 17 16.0391 16.7893 16.4142 16.4142C16.7893 16.0391 17 15.5304 17 15V5C17 4.46957 16.7893 3.96086 16.4142 3.58579C16.0391 3.21071 15.5304 3 15 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V15C3 15.5304 3.21071 16.0391 3.58579 16.4142C3.96086 16.7893 4.46957 17 5 17H7V19L9 17H15',
+        viewBox: '0 0 24 24'
+      },
+      user: {
+        path: 'M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21 M12 11A4 4 0 1 0 12 7A4 4 0 1 0 12 11Z',
+        viewBox: '0 0 24 24'
+      }
+    }
+
+    // SVG转PNG
+    async function svgToPng(svgContent, filename) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 81;
+      canvas.height = 81;
+      const ctx = canvas.getContext('2d');
+
+      const img = new Image();
+      const svgBlob = new Blob([svgContent], {type: 'image/svg+xml;charset=utf-8'});
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function() {
+        ctx.clearRect(0, 0, 81, 81);
+        ctx.drawImage(img, 0, 0, 81, 81);
+
+        // 下载PNG
+        const pngUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = pngUrl;
+        link.click();
+
+        // 清理
+        URL.revokeObjectURL(url);
+        showDownloadIndicator();
+      };
+
+      img.src = url;
+    }
+
+    // 生成单个图标
+    function downloadIcon(iconKey) {
+      const config = iconConfigs[iconKey];
+      const inactiveColor = '#999999';
+      const activeColor = '#1890ff';
+
+      // 生成未选中状态
+      const inactiveSvg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="81" height="81" viewBox="${config.viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="${config.path}" stroke="${inactiveColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
+      // 生成选中状态
+      const activeSvg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="81" height="81" viewBox="${config.viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="${config.path}" stroke="${activeColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
+      // 批量下载
+      setTimeout(() => {
+        svgToPng(inactiveSvg, `${iconKey}.png`);
+        setTimeout(() => {
+          svgToPng(activeSvg, `${iconKey}-active.png`);
+        }, 500);
+      }, 100);
+    }
+
+    // 下载所有图标
+    function downloadAllIcons() {
+      const iconKeys = Object.keys(iconConfigs);
+      let delay = 0;
+
+      iconKeys.forEach(iconKey => {
+        setTimeout(() => {
+          downloadIcon(iconKey);
+        }, delay);
+        delay += 1000;
+      });
+    }
+
+    // 显示下载提示
+    function showDownloadIndicator() {
+      const indicator = document.getElementById('downloadIndicator');
+      indicator.classList.add('show');
+      setTimeout(() => {
+        indicator.classList.remove('show');
+      }, 2000);
+    }
+
+    // 页面加载时显示提示
+    window.onload = function() {
+      console.log('🎨 TabBar图标生成工具已加载');
+      console.log('💡 提示：点击下载按钮后，浏览器可能会阻止多个下载，请允许');
+    }
+  </script>
+</body>
+</html>

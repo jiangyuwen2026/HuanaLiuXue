@@ -1,0 +1,632 @@
+<view class="container">
+  
+  <!-- 顶部统计 -->
+  <view class="stats-section">
+    <view class="stat-item" wx:for="{{stats}}" wx:key="label">
+      <text class="stat-value">{{item.value}}</text>
+      <text class="stat-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <!-- 服务分类标签 -->
+  <view class="tab-section">
+    <scroll-view class="tab-scroll" scroll-x="true" enhanced show-scrollbar="{{false}}">
+      <view 
+        class="tab-item {{currentTab === index ? 'active' : ''}}"
+        wx:for="{{serviceTabs}}"
+        wx:key="*this"
+        data-index="{{index}}"
+        bindtap="switchTab"
+      >
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- ========== 留学申请详情内容 ========== -->
+  <block wx:if="{{!loading && currentTab === 0}}">
+    
+    <!-- 全方位服务 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">全方位服务</text>
+        <text class="section-subtitle">一站式留学申请解决方案</text>
+      </view>
+      
+      <view class="service-grid">
+        <view class="detail-service-card" wx:for="{{applyServices}}" wx:key="title">
+          <view class="detail-icon-wrap">
+            <text class="detail-icon">{{item.icon}}</text>
+          </view>
+          <text class="detail-name">{{item.title}}</text>
+          <text class="detail-desc">{{item.desc}}</text>
+          <view class="detail-features">
+            <text class="detail-tag" wx:for="{{item.features}}" wx:for-item="feat" wx:key="*this">{{feat}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 服务流程 -->
+    <view class="section process-section">
+      <view class="section-header">
+        <text class="section-title">服务流程</text>
+        <text class="section-subtitle">6步精细化服务，全程透明可追溯</text>
+      </view>
+      
+      <view class="process-list">
+        <view class="process-item" wx:for="{{process}}" wx:key="step">
+          <view class="process-step">{{item.step}}</view>
+          <view class="process-info">
+            <text class="process-title">{{item.title}}</text>
+            <text class="process-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 顾问团队 -->
+    <view class="section consultant-section">
+      <view class="section-header">
+        <text class="section-title">专业顾问团队</text>
+        <text class="section-subtitle">资深顾问一对一服务</text>
+      </view>
+      
+      <scroll-view 
+        class="consultant-scroll-list" 
+        scroll-y="true" 
+        enhanced="true"
+        show-scrollbar="{{true}}"
+        scroll-with-animation="true"
+      >
+        <view 
+          class="consultant-card" 
+          wx:for="{{consultants}}" 
+          wx:key="id"
+          bindtap="goToConsultantDetail"
+          data-id="{{item.id}}"
+          hover-class="consultant-card-hover"
+          hover-start-time="50"
+          hover-stay-time="200"
+        >
+          <image 
+            class="consultant-avatar" 
+            src="{{item.avatar}}" 
+            mode="aspectFill"
+            data-index="{{index}}"
+            binderror="onAvatarError"
+          />
+          <view class="consultant-info">
+            <text class="consultant-name">{{item.name}}</text>
+            <text class="consultant-title">{{item.title}}</text>
+            <text class="consultant-edu">{{item.education}}</text>
+            <view class="consultant-stats">
+              <text>{{item.experience}}年经验</text>
+              <text>{{item.successCases}}+案例</text>
+              <text class="rating">{{item.rating}}分</text>
+            </view>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 底部CTA -->
+    <view class="cta-section">
+      <text class="cta-text">开启您的留学之旅</text>
+      <button class="cta-btn" bindtap="goToConsult">立即预约咨询</button>
+    </view>
+
+  </block>
+
+  <!-- ========== 英语培训详情内容 ========== -->
+  <block wx:if="{{!loading && currentTab === 1}}">
+
+    <!-- 核心优势 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">核心优势</text>
+        <text class="section-subtitle">专业团队，科学方法，助您快速提升</text>
+      </view>
+      
+      <view class="service-grid">
+        <view class="detail-service-card" wx:for="{{englishData.features}}" wx:key="title">
+          <view class="detail-icon-wrap english-icon">
+            <text class="detail-icon">{{item.icon}}</text>
+          </view>
+          <text class="detail-name">{{item.title}}</text>
+          <text class="detail-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 精品课程 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">精品课程</text>
+        <text class="section-subtitle">科学分层教学，满足不同目标分数</text>
+      </view>
+      
+      <!-- 课程切换标签 -->
+      <view class="course-tabs">
+        <view 
+          class="course-tab {{currentCourseTab === 'ielts' ? 'active' : ''}}"
+          bindtap="switchCourseTab"
+          data-tab="ielts"
+        >雅思课程</view>
+        <view 
+          class="course-tab {{currentCourseTab === 'toefl' ? 'active' : ''}}"
+          bindtap="switchCourseTab"
+          data-tab="toefl"
+        >托福课程</view>
+      </view>
+      
+      <!-- 课程列表 -->
+      <view class="course-list">
+        <view 
+          class="course-card {{item.popular ? 'popular' : ''}}"
+          wx:for="{{currentCourseTab === 'ielts' ? englishData.ieltsCourses : englishData.toeflCourses}}"
+          wx:key="name"
+        >
+          <view class="popular-badge" wx:if="{{item.popular}}">🔥 最受欢迎</view>
+          <text class="course-name">{{item.name}}</text>
+          <text class="course-target">{{item.target}}</text>
+          <view class="course-duration">
+            <text class="duration-icon">⏱</text>
+            <text>{{item.duration}}</text>
+          </view>
+          <view class="course-features">
+            <text class="course-feature-tag" wx:for="{{item.features}}" wx:for-item="feat" wx:key="*this">{{feat}}</text>
+          </view>
+          <view class="course-footer">
+            <text class="course-price">{{item.price}}</text>
+            <view class="course-btn" bindtap="goToConsult">立即报名</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 专业顾问团队 -->
+    <view class="section consultant-section">
+      <view class="section-header">
+        <text class="section-title">专业顾问团队</text>
+        <text class="section-subtitle">资深顾问一对一服务</text>
+      </view>
+      
+      <scroll-view 
+        class="consultant-scroll-list" 
+        scroll-y="true" 
+        enhanced="true"
+        show-scrollbar="{{true}}"
+        scroll-with-animation="true"
+      >
+        <view 
+          class="consultant-card" 
+          wx:for="{{consultants}}" 
+          wx:key="id"
+          bindtap="goToConsultantDetail"
+          data-id="{{item.id}}"
+          hover-class="consultant-card-hover"
+          hover-start-time="50"
+          hover-stay-time="200"
+        >
+          <image 
+            class="consultant-avatar" 
+            src="{{item.avatar}}" 
+            mode="aspectFill"
+          />
+          <view class="consultant-info">
+            <text class="consultant-name">{{item.name}}</text>
+            <text class="consultant-title">{{item.title}}</text>
+            <text class="consultant-edu">{{item.education}}</text>
+            <view class="consultant-stats">
+              <text>{{item.experience}}年经验</text>
+              <text>{{item.successCases}}+案例</text>
+              <text class="rating">{{item.rating}}分</text>
+            </view>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 学习流程 -->
+    <view class="section process-section">
+      <view class="section-header">
+        <text class="section-title">学习流程</text>
+        <text class="section-subtitle">五步教学法，确保学习效果最大化</text>
+      </view>
+      
+      <view class="process-list english-process">
+        <view class="process-item" wx:for="{{englishData.process}}" wx:key="step">
+          <view class="process-step">{{item.step}}</view>
+          <view class="process-info">
+            <text class="process-title">{{item.title}}</text>
+            <text class="process-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 学员成绩 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">学员成绩</text>
+        <text class="section-subtitle">他们用成绩证明实力</text>
+      </view>
+      
+      <view class="success-list">
+        <view class="success-card" wx:for="{{englishData.successCases}}" wx:key="name">
+          <view class="success-header">
+            <text class="success-name">{{item.name}}</text>
+            <text class="success-duration">{{item.duration}}</text>
+          </view>
+          <view class="success-score">
+            <view class="score-before">
+              <text class="score-label">入学前</text>
+              <text class="score-value">{{item.before}}</text>
+            </view>
+            <text class="score-arrow">→</text>
+            <view class="score-after">
+              <text class="score-label">结课后</text>
+              <text class="score-value">{{item.after}}</text>
+            </view>
+          </view>
+          <text class="success-school">{{item.school}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部CTA -->
+    <view class="cta-section english-cta">
+      <text class="cta-text">免费试听 + 水平测试</text>
+      <text class="cta-subtext">填写信息，课程顾问将在24小时内与您联系</text>
+      <button class="cta-btn" bindtap="goToConsult">立即预约试听</button>
+    </view>
+
+  </block>
+
+  <!-- ========== 竞赛规划详情内容 ========== -->
+  <block wx:if="{{!loading && currentTab === 2}}">
+    
+    <!-- 核心优势 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">核心优势</text>
+        <text class="section-subtitle">国际竞赛获奖经历是申请顶尖名校的重要加分项</text>
+      </view>
+      
+      <view class="service-grid">
+        <view class="detail-service-card" wx:for="{{competitionData.features}}" wx:key="title">
+          <view class="detail-icon-wrap competition-icon">
+            <text class="detail-icon">{{item.icon}}</text>
+          </view>
+          <text class="detail-name">{{item.title}}</text>
+          <text class="detail-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 竞赛项目 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">覆盖主流国际权威竞赛</text>
+        <text class="section-subtitle">数学、物理、化学、生物、计算机、商科经济</text>
+      </view>
+      
+      <!-- 竞赛分类标签 -->
+      <view class="competition-tabs">
+        <view 
+          class="competition-tab {{currentCompetitionTab === item.key ? 'active' : ''}}"
+          wx:for="{{competitionData.categories}}"
+          wx:key="key"
+          bindtap="switchCompetitionTab"
+          data-tab="{{item.key}}"
+          style="{{currentCompetitionTab === item.key ? 'background: linear-gradient(135deg, ' + item.color + ' 0%, ' + item.color + 'dd 100%); color: #fff;' : ''}}"
+        >{{item.name}}</view>
+      </view>
+      
+      <!-- 竞赛列表 -->
+      <view class="competition-list">
+        <block wx:for="{{competitionData.categories}}" wx:key="key">
+          <view class="competition-category-content" wx:if="{{currentCompetitionTab === item.key}}">
+            <view class="competition-item" wx:for="{{item.competitions}}" wx:for-item="comp" wx:key="*this">
+              <text class="competition-dot" style="background: {{item.color}};"></text>
+              <text class="competition-name">{{comp}}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 专业顾问团队 -->
+    <view class="section consultant-section">
+      <view class="section-header">
+        <text class="section-title">专业顾问团队</text>
+        <text class="section-subtitle">资深顾问一对一服务</text>
+      </view>
+      
+      <scroll-view 
+        class="consultant-scroll-list" 
+        scroll-y="true" 
+        enhanced="true"
+        show-scrollbar="{{true}}"
+        scroll-with-animation="true"
+      >
+        <view 
+          class="consultant-card" 
+          wx:for="{{consultants}}" 
+          wx:key="id"
+          bindtap="goToConsultantDetail"
+          data-id="{{item.id}}"
+          hover-class="consultant-card-hover"
+          hover-start-time="50"
+          hover-stay-time="200"
+        >
+          <image 
+            class="consultant-avatar" 
+            src="{{item.avatar}}" 
+            mode="aspectFill"
+          />
+          <view class="consultant-info">
+            <text class="consultant-name">{{item.name}}</text>
+            <text class="consultant-title">{{item.title}}</text>
+            <text class="consultant-edu">{{item.education}}</text>
+            <view class="consultant-stats">
+              <text>{{item.experience}}年经验</text>
+              <text>{{item.successCases}}+案例</text>
+              <text class="rating">{{item.rating}}分</text>
+            </view>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 成功案例 -->
+    <view class="section competition-success-section">
+      <view class="section-header">
+        <text class="section-title">成功案例</text>
+        <text class="section-subtitle">他们用竞赛成绩敲开名校大门</text>
+      </view>
+      
+      <view class="competition-success-list">
+        <view class="competition-success-card" wx:for="{{competitionData.successCases}}" wx:key="name">
+          <view class="success-avatar">{{item.avatar}}</view>
+          <view class="success-info">
+            <text class="success-name">{{item.name}} · {{item.grade}}</text>
+            <view class="success-competitions">
+              <text class="success-label">竞赛成绩</text>
+              <text class="success-value">{{item.competitions}}</text>
+            </view>
+            <text class="success-result">{{item.result}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 服务流程 -->
+    <view class="section process-section">
+      <view class="section-header">
+        <text class="section-title">六步竞赛规划体系</text>
+        <text class="section-subtitle">科学规划，确保最佳竞赛效果</text>
+      </view>
+      
+      <view class="process-list competition-process">
+        <view class="process-item" wx:for="{{competitionData.process}}" wx:key="step">
+          <view class="process-step">{{item.step}}</view>
+          <view class="process-info">
+            <text class="process-title">{{item.title}}</text>
+            <text class="process-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部CTA -->
+    <view class="cta-section competition-cta">
+      <text class="cta-text">免费竞赛规划评估</text>
+      <text class="cta-subtext">填写信息，我们的竞赛顾问将为您制定个性化规划方案</text>
+      <button class="cta-btn" bindtap="goToConsult">立即预约咨询</button>
+    </view>
+
+  </block>
+
+  <!-- ========== 科研提升详情内容 ========== -->
+  <block wx:if="{{!loading && currentTab === 3}}">
+    
+    <!-- 核心优势 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">核心优势</text>
+        <text class="section-subtitle">专业的科研指导，帮助你产出高质量的研究成果</text>
+      </view>
+      
+      <view class="service-grid">
+        <view class="detail-service-card" wx:for="{{researchData.features}}" wx:key="title">
+          <view class="detail-icon-wrap research-icon">
+            <text class="detail-icon">{{item.icon}}</text>
+          </view>
+          <text class="detail-name">{{item.title}}</text>
+          <text class="detail-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 研究领域 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">涵盖多学科前沿领域</text>
+        <text class="section-subtitle">覆盖STEM、商科、社科等多个学科方向</text>
+      </view>
+      
+      <!-- 领域切换标签 -->
+      <view class="research-tabs">
+        <view 
+          class="research-tab {{currentResearchTab === item.key ? 'active' : ''}}"
+          wx:for="{{researchData.fields}}"
+          wx:key="key"
+          bindtap="switchResearchTab"
+          data-tab="{{item.key}}"
+        >
+          <text class="research-tab-icon">{{item.icon}}</text>
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+      
+      <!-- 研究方向列表 -->
+      <view class="research-topics">
+        <block wx:for="{{researchData.fields}}" wx:key="key">
+          <view class="research-topic-content" wx:if="{{currentResearchTab === item.key}}">
+            <view class="research-topic-header">
+              <text class="research-topic-icon">{{item.icon}}</text>
+              <view>
+                <text class="research-topic-name">{{item.name}}</text>
+                <text class="research-topic-subtitle">热门研究方向</text>
+              </view>
+            </view>
+            <view class="research-topic-list">
+              <text class="research-topic-item" wx:for="{{item.topics}}" wx:for-item="topic" wx:key="*this">{{topic}}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 项目类型 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">适合不同阶段的科研项目</text>
+        <text class="section-subtitle">从科研启蒙到论文发表，总有一款适合你</text>
+      </view>
+      
+      <view class="research-program-list">
+        <view class="research-program-card {{item.tag === '热门推荐' ? 'popular' : ''}}" wx:for="{{researchData.programs}}" wx:key="name" hover-class="research-program-card-hover" hover-start-time="50" hover-stay-time="300">
+          <view class="program-tag {{item.tag === '入门首选' ? 'tag-beginner' : item.tag === '热门推荐' ? 'tag-popular' : 'tag-advanced'}}">{{item.tag}}</view>
+          <text class="program-name">{{item.name}}</text>
+          <view class="program-meta">
+            <text class="program-duration">⏱ {{item.duration}}</text>
+            <text class="program-suitable">适合: {{item.suitable}}</text>
+          </view>
+          <view class="program-features">
+            <text class="program-feature" wx:for="{{item.features}}" wx:for-item="feat" wx:key="*this">✓ {{feat}}</text>
+          </view>
+          <view class="program-outcome">
+            <text class="outcome-label">预期产出</text>
+            <text class="outcome-value">{{item.outcome}}</text>
+          </view>
+          <view class="program-footer">
+            <view class="program-btn" bindtap="goToConsult" hover-class="program-btn-hover" hover-start-time="50" hover-stay-time="200">了解详情</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 专业顾问团队 -->
+    <view class="section consultant-section">
+      <view class="section-header">
+        <text class="section-title">专业顾问团队</text>
+        <text class="section-subtitle">资深顾问一对一服务</text>
+      </view>
+      
+      <scroll-view 
+        class="consultant-scroll-list" 
+        scroll-y="true" 
+        enhanced="true"
+        show-scrollbar="{{true}}"
+        scroll-with-animation="true"
+      >
+        <view 
+          class="consultant-card" 
+          wx:for="{{consultants}}" 
+          wx:key="id"
+          bindtap="goToConsultantDetail"
+          data-id="{{item.id}}"
+          hover-class="consultant-card-hover"
+          hover-start-time="50"
+          hover-stay-time="200"
+        >
+          <image 
+            class="consultant-avatar" 
+            src="{{item.avatar}}" 
+            mode="aspectFill"
+          />
+          <view class="consultant-info">
+            <text class="consultant-name">{{item.name}}</text>
+            <text class="consultant-title">{{item.title}}</text>
+            <text class="consultant-edu">{{item.education}}</text>
+            <view class="consultant-stats">
+              <text>{{item.experience}}年经验</text>
+              <text>{{item.successCases}}+案例</text>
+              <text class="rating">{{item.rating}}分</text>
+            </view>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 成功案例 -->
+    <view class="section research-success-section">
+      <view class="section-header">
+        <text class="section-title">用科研成果敲开名校大门</text>
+        <text class="section-subtitle">他们的成功，也可以是你的未来</text>
+      </view>
+      
+      <view class="research-success-list">
+        <view class="research-success-card" wx:for="{{researchData.successCases}}" wx:key="name">
+          <view class="research-success-header">
+            <view class="research-success-avatar">{{item.name[0]}}</view>
+            <view>
+              <text class="research-success-name">{{item.name}}</text>
+              <text class="research-success-grade">{{item.grade}} · {{item.field}}</text>
+            </view>
+          </view>
+          <view class="research-success-achievement">
+            <text class="achievement-label">科研成果</text>
+            <text class="achievement-value">{{item.achievement}}</text>
+          </view>
+          <text class="research-success-result">{{item.result}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 服务流程 -->
+    <view class="section process-section">
+      <view class="section-header">
+        <text class="section-title">六步科研服务体系</text>
+        <text class="section-subtitle">系统化的科研路径，确保高质量产出</text>
+      </view>
+      
+      <view class="process-list research-process">
+        <view class="process-item" wx:for="{{researchData.process}}" wx:key="step">
+          <view class="process-step">{{item.step}}</view>
+          <view class="process-info">
+            <text class="process-title">{{item.title}}</text>
+            <text class="process-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部CTA -->
+    <view class="cta-section research-cta">
+      <text class="cta-text">免费科研背景评估</text>
+      <text class="cta-subtext">填写信息，我们的科研顾问将为您制定个性化方案</text>
+      <button class="cta-btn" bindtap="goToConsult">立即预约咨询</button>
+    </view>
+
+  </block>
+
+</view>
+
+<!-- 浮动咨询按钮 -->
+<view class="fab" bindtap="goToConsult">
+  <text class="fab-text">免费咨询</text>
+</view>

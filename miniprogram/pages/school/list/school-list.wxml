@@ -1,0 +1,65 @@
+<!-- 学校列表页 -->
+<view class="container">
+  
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <image class="search-icon" src="/images/icon/search.png" mode="aspectFit" />
+      <input 
+        class="search-input" 
+        placeholder="搜索学校名称" 
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+        bindconfirm="onSearch"
+      />
+    </view>
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <!-- 国家筛选 -->
+  <scroll-view class="filter-bar" scroll-x="{{true}}" show-scrollbar="{{false}}">
+    <view 
+      class="filter-item {{selectedCountry === (country === '全部' ? '' : country) ? 'active' : ''}}"
+      wx:for="{{countryList}}"
+      wx:key="*this"
+      bindtap="onFilterCountry"
+      data-country="{{item}}"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+
+  <!-- 学校列表 -->
+  <view class="school-list">
+    <view 
+      class="school-item card"
+      wx:for="{{schoolList}}"
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <image class="school-logo" src="{{item.logo}}" mode="aspectFit" lazy-load />
+      <view class="school-info">
+        <text class="school-name">{{item.name}}</text>
+        <text class="school-name-en" wx:if="{{item.name_en}}">{{item.name_en}}</text>
+        <view class="school-meta">
+          <text class="school-country" wx:if="{{item.country}}">{{item.country}}</text>
+          <text class="school-ranking" wx:if="{{item.ranking}}">{{item.ranking}}</text>
+        </view>
+        <text class="school-desc" wx:if="{{item.description}}">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore && schoolList.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+  <view class="empty-state" wx:if="{{!loading && schoolList.length === 0}}">
+    <text>暂无学校数据</text>
+  </view>
+</view>

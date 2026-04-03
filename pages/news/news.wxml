@@ -1,0 +1,76 @@
+<view class="container">
+  
+  <!-- 分类标签 -->
+  <view class="tab-section">
+    <scroll-view class="tab-scroll" scroll-x="{{true}}" enhanced show-scrollbar="{{false}}">
+      <view 
+        class="tab-item {{currentTab === index ? 'active' : ''}}"
+        wx:for="{{tabs}}"
+        wx:key="*this"
+        data-index="{{index}}"
+        bindtap="switchTab"
+      >
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading && newsList.length === 0}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 资讯列表 -->
+  <view class="news-list" wx:if="{{newsList.length > 0}}">
+    <view 
+      class="news-card"
+      wx:for="{{newsList}}"
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="news-cover-wrapper">
+        <image 
+          class="news-cover" 
+          src="{{item.coverImage}}" 
+          mode="aspectFill" 
+          lazy-load
+          data-index="{{index}}"
+          binderror="onImageError"
+          wx:if="{{item.coverImage}}"
+        />
+        <view class="news-cover-placeholder" wx:if="{{!item.coverImage}}">
+          <text class="placeholder-icon">📰</text>
+        </view>
+      </view>
+      <view class="news-content">
+        <text class="news-title">{{item.title}}</text>
+        <text class="news-summary">{{item.summary}}</text>
+        <view class="news-meta">
+          <text class="news-tag">{{item.category}}</text>
+          <text class="news-views">{{item.views}} 阅读</text>
+          <text class="news-time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 加载更多 -->
+    <view class="loading-more" wx:if="{{loading && newsList.length > 0}}">
+      <text>加载中...</text>
+    </view>
+    
+    <!-- 没有更多 -->
+    <view class="no-more" wx:if="{{!hasMore && newsList.length > 0}}">
+      <text>没有更多了</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && newsList.length === 0}}">
+    <text class="empty-icon">📰</text>
+    <text class="empty-text">暂无资讯</text>
+    <text class="empty-tip">该分类下暂时没有内容</text>
+  </view>
+
+</view>

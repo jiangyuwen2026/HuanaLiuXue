@@ -1,0 +1,97 @@
+-- 创建竞赛表
+CREATE TABLE IF NOT EXISTS `competitions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `slug` VARCHAR(50) NOT NULL COMMENT 'URL标识',
+  `name` VARCHAR(100) NOT NULL COMMENT '竞赛名称',
+  `name_en` VARCHAR(100) DEFAULT NULL COMMENT '英文名称',
+  `category` VARCHAR(50) NOT NULL COMMENT '分类：math/physics/chemistry/biology/computer/business',
+  `level` VARCHAR(50) DEFAULT NULL COMMENT '难度级别：beginner/intermediate/advanced',
+  `hero_tag` VARCHAR(50) DEFAULT NULL COMMENT 'Hero标签',
+  `hero_short_desc` TEXT COMMENT '简短描述',
+  `overview` TEXT COMMENT '竞赛概述（HTML）',
+  `eligibility` TEXT COMMENT '参赛资格',
+  `format` TEXT COMMENT '竞赛形式（HTML）',
+  `syllabus` TEXT COMMENT '考试大纲（HTML）',
+  `scoring` TEXT COMMENT '评分标准',
+  `timeline` JSON DEFAULT NULL COMMENT '时间节点',
+  `awards` TEXT COMMENT '奖项说明（HTML）',
+  `award_details` JSON DEFAULT NULL COMMENT '奖项详情',
+  `score_history` JSON DEFAULT NULL COMMENT '历年分数线',
+  `resources` JSON DEFAULT NULL COMMENT '备考资源',
+  `recommended_books` JSON DEFAULT NULL COMMENT '推荐书籍',
+  `participants` VARCHAR(50) DEFAULT NULL COMMENT '参赛人数',
+  `countries` VARCHAR(20) DEFAULT NULL COMMENT '参与国家数',
+  `difficulty_score` INT DEFAULT NULL COMMENT '难度评分1-10',
+  `recognition` VARCHAR(200) DEFAULT NULL COMMENT '认可度说明',
+  `logo` VARCHAR(500) DEFAULT NULL COMMENT 'Logo图片',
+  `banner` VARCHAR(500) DEFAULT NULL COMMENT 'Banner图片',
+  `official_url` VARCHAR(500) DEFAULT NULL COMMENT '官网链接',
+  `status` TINYINT DEFAULT 1 COMMENT '0=下架,1=上架',
+  `sort_order` INT DEFAULT 0 COMMENT '排序',
+  `view_count` INT DEFAULT 0 COMMENT '浏览量',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_slug` (`slug`),
+  KEY `idx_category` (`category`),
+  KEY `idx_status` (`status`),
+  KEY `idx_sort` (`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='竞赛表';
+
+-- 插入示例数据（AMC 10/12）
+INSERT INTO `competitions` (
+  `slug`, `name`, `name_en`, `category`, `level`, `hero_tag`, `hero_short_desc`,
+  `overview`, `eligibility`, `format`, `syllabus`, `scoring`,
+  `timeline`, `awards`, `participants`, `countries`, `difficulty_score`, `recognition`,
+  `status`, `sort_order`
+) VALUES (
+  'amc-8-10-12',
+  'AMC 8/10/12',
+  'American Mathematics Competitions',
+  'math',
+  'intermediate',
+  '国际顶尖数学竞赛',
+  '全球最具影响力的中学生数学竞赛，藤校申请的重要加分项',
+  '<p>AMC（American Mathematics Competitions）是美国数学竞赛的缩写，由美国数学协会（MAA）主办，是全球最具影响力的中学生数学竞赛之一。</p><p>AMC系列竞赛包括：</p><ul><li><strong>AMC 8</strong>：面向8年级及以下学生，25道选择题，40分钟</li><li><strong>AMC 10</strong>：面向10年级及以下学生，25道选择题，75分钟</li><li><strong>AMC 12</strong>：面向12年级及以下学生，25道选择题，75分钟</li></ul>',
+  'AMC 8：8年级及以下；AMC 10：10年级及以下；AMC 12：12年级及以下',
+  '<p>考试形式：选择题，共25题</p><p>考试时间：AMC 8为40分钟，AMC 10/12为75分钟</p><p>计分方式：答对得6分，不答得1.5分，答错得0分，满分150分</p>',
+  '<p><strong>代数</strong>：方程、不等式、函数、数列、多项式</p><p><strong>几何</strong>：平面几何、立体几何、解析几何、三角形</p><p><strong>数论</strong>：整除、同余、质数、因数分解、进制</p><p><strong>组合</strong>：计数原理、概率、排列组合、图论基础</p>',
+  '满分150分，答对得6分，不答得1.5分，答错得0分。AMC 10前2.5%和AMC 12前5%可晋级AIME。',
+  '[{"date": "11月", "title": "AMC 10/12考试", "description": "每年11月举行，分为A卷和B卷"}, {"date": "次年1月", "title": "成绩公布", "description": "考试成绩和晋级分数线公布"}, {"date": "次年2月", "title": "AIME考试", "description": "晋级选手参加美国数学邀请赛"}]',
+  '<p>AMC 10/12：全球前1% Distinguished Honor Roll，全球前5% Honor Roll</p><p>AIME：基于AMC成绩和AIME成绩综合评定，晋级USAMO/USAJMO</p>',
+  '30万+',
+  '80+',
+  7,
+  '藤校、MIT、斯坦福等顶尖大学高度认可',
+  1,
+  1
+);
+
+-- 插入示例数据（Physics Bowl）
+INSERT INTO `competitions` (
+  `slug`, `name`, `name_en`, `category`, `level`, `hero_tag`, `hero_short_desc`,
+  `overview`, `eligibility`, `format`, `syllabus`, `scoring`,
+  `timeline`, `awards`, `participants`, `countries`, `difficulty_score`, `recognition`,
+  `status`, `sort_order`
+) VALUES (
+  'physics-bowl',
+  'Physics Bowl',
+  'American High School Physics Competition',
+  'physics',
+  'intermediate',
+  '美国权威物理竞赛',
+  '美国高中物理思维挑战活动，理工科申请的重要加分项',
+  '<p>Physics Bowl（物理碗）是美国高中物理思维挑战活动，由美国物理教师协会（AAPT）主办，是全球最具影响力的中学生物理竞赛之一。</p><p>竞赛分为两个级别：</p><ul><li><strong>Division 1</strong>：适合IB物理第一年或同等水平学生</li><li><strong>Division 2</strong>：适合IB物理第二年或AP物理学生</li></ul>',
+  'Division 1：IB物理第一年或同等水平；Division 2：IB物理第二年或AP物理',
+  '<p>考试形式：选择题，共40题，45分钟</p><p>考试语言：英文</p><p>Division 1做1-40题，Division 2做11-50题</p>',
+  '<p><strong>力学</strong>：运动学、牛顿定律、能量、动量、转动</p><p><strong>电磁学</strong>：电场、磁场、电路、电磁感应</p><p><strong>热学</strong>：温度、热量、热力学定律、气体</p><p><strong>光学与波动</strong>：光的性质、波动、声音</p><p><strong>现代物理</strong>：量子物理、相对论、原子物理、核物理</p>',
+  '满分40分，答对得1分，答错或不答得0分。两个级别分别排名。',
+  '[{"date": "3月", "title": "物理碗考试", "description": "每年3月举行"}, {"date": "4月", "title": "成绩公布", "description": "考试成绩公布"}, {"date": "5月", "title": "全球奖项公布", "description": "全球前100名等奖项公布"}]',
+  '<p>全球个人奖：全球前100名、区域前10名</p><p>全国奖：金牌（前10%）、银牌（前20%）、铜牌（前30%）</p><p>物理优秀奖：各区排名（除全国奖项外）前20%</p>',
+  '5万+',
+  '40+',
+  6,
+  '美国顶尖大学高度认可',
+  1,
+  2
+);

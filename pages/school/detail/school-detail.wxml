@@ -1,0 +1,139 @@
+<!-- 学校详情页 -->
+<view class="container">
+  <!-- 学校头图 -->
+  <image class="school-cover" src="{{school.coverImage}}" mode="aspectFill"></image>
+
+  <!-- 学校基本信息 -->
+  <view class="school-info card">
+    <view class="info-header">
+      <text class="school-name">{{school.name}}</text>
+      <text class="school-ranking">{{school.ranking}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">国家：</text>
+      <text class="info-value">{{school.country}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">类型：</text>
+      <text class="info-value">{{school.type}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">成立时间：</text>
+      <text class="info-value">{{school.founded}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">官网：</text>
+      <text class="info-value text-primary" bindtap="openWebsite">{{school.website}}</text>
+    </view>
+  </view>
+
+  <!-- 学校标签 -->
+  <view class="tags-section card">
+    <text class="tag tag-primary" wx:for="{{school.tags}}" wx:key="*this">{{item}}</text>
+  </view>
+
+  <!-- 学校简介 -->
+  <view class="section card">
+    <view class="section-title">学校简介</view>
+    <text class="section-content">{{school.introduction}}</text>
+  </view>
+
+  <!-- 院系与专业 -->
+  <view class="section card">
+    <view class="section-title">院系与专业</view>
+    
+    <!-- 本科专业 -->
+    <view class="faculty-section" wx:if="{{school.faculties && school.faculties.length > 0}}">
+      <view class="sub-section-title">
+        <text class="degree-label">本科专业</text>
+        <text class="degree-count">{{school.undergraduateCount}}个专业</text>
+      </view>
+      
+      <view class="faculty-list">
+        <view class="faculty-item" wx:for="{{school.faculties}}" wx:key="name">
+          <view class="faculty-header" bindtap="toggleFaculty" data-index="{{index}}">
+            <view class="faculty-name-row">
+              <text class="faculty-name">{{item.name}}</text>
+              <text class="faculty-arrow">{{item.expanded ? '▼' : '▶'}}</text>
+            </view>
+            <text class="major-count">{{item.majors.length}}个专业</text>
+          </view>
+          
+          <view class="major-grid" wx:if="{{item.expanded}}">
+            <view class="major-grid-item" wx:for="{{item.majors}}" wx:key="*this">
+              <view class="major-item-inner">
+                <text class="major-name-text">{{item}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 硕士专业 -->
+    <view class="faculty-section" wx:if="{{school.masterCategories && school.masterCategories.length > 0}}">
+      <view class="sub-section-title">
+        <text class="degree-label">硕士专业</text>
+        <text class="degree-count">{{school.masterCount}}个专业</text>
+      </view>
+      
+      <view class="category-list">
+        <view class="category-item" wx:for="{{school.masterCategories}}" wx:key="name">
+          <view class="category-header">
+            <text class="category-name">{{item.name}}</text>
+            <text class="program-count">{{item.programs.length}}个专业</text>
+          </view>
+          <view class="program-grid">
+            <view class="program-item" wx:for="{{item.programs}}" wx:key="name">
+              <view class="program-item-inner">
+                <text class="program-name-text">{{item.name}}</text>
+                <view class="program-info">
+                  <text class="program-duration">{{item.duration}}</text>
+                  <text class="program-language">{{item.language}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 录取要求 -->
+  <view class="section card">
+    <view class="section-title">录取要求</view>
+    <view class="requirement-item">
+      <text class="req-label">语言要求：</text>
+      <text class="req-value">{{school.languageRequirement}}</text>
+    </view>
+    <view class="requirement-item">
+      <text class="req-label">GPA要求：</text>
+      <text class="req-value">{{school.gpaRequirement}}</text>
+    </view>
+    <view class="requirement-item">
+      <text class="req-label">申请材料：</text>
+      <text class="req-value">{{school.materials}}</text>
+    </view>
+  </view>
+
+  <!-- 留学费用 -->
+  <view class="section card">
+    <view class="section-title">留学费用</view>
+    <view class="fee-item">
+      <text class="fee-label">学费：</text>
+      <text class="fee-value">{{school.tuition}}</text>
+    </view>
+    <view class="fee-item">
+      <text class="fee-label">生活费：</text>
+      <text class="fee-value">{{school.livingCost}}</text>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-bar">
+    <button class="action-btn btn-outline" bindtap="toggleCollect">
+      {{school.isCollected ? '已收藏' : '收藏学校'}}
+    </button>
+    <button class="action-btn" bindtap="makeAppointment">预约咨询</button>
+  </view>
+</view>

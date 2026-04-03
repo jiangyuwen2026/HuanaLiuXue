@@ -1,0 +1,62 @@
+<!-- 留学申请流程指导页 -->
+<view class="container">
+  <!-- 流程图 -->
+  <view class="section card">
+    <view class="section-title">申请流程</view>
+    <view class="process-steps">
+      <view class="step-item" wx:for="{{process}}" wx:key="step">
+        <view class="step-number">{{item.step}}</view>
+        <view class="step-content">
+          <text class="step-title">{{item.title}}</text>
+          <text class="step-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 申请时间节点 -->
+  <view class="section card">
+    <view class="section-title">申请时间节点</view>
+    <view class="timeline">
+      <view class="timeline-item" wx:for="{{timeline}}" wx:key="month">
+        <view class="timeline-dot"></view>
+        <view class="timeline-content">
+          <text class="timeline-month">{{item.month}}</text>
+          <text class="timeline-event">{{item.event}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 申请材料清单 -->
+  <view class="section card">
+    <view class="section-title">申请材料清单</view>
+    <view class="material-list">
+      <view class="material-item" wx:for="{{materials}}" wx:key="name">
+        <view class="material-header">
+          <text class="material-name">{{item.name}}</text>
+          <text class="material-status {{item.required ? 'required' : 'optional'}}">
+            {{item.required ? '必需' : '可选'}}
+          </text>
+        </view>
+        <text class="material-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 常见问题 -->
+  <view class="section card">
+    <view class="section-title">常见问题</view>
+    <view class="faq-list">
+      <view class="faq-item" wx:for="{{faq}}" wx:key="question">
+        <text class="faq-question">{{item.question}}</text>
+        <text class="faq-answer">{{item.answer}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-bar">
+    <button class="action-btn" bindtap="makeAppointment">预约咨询</button>
+  </view>
+</view>

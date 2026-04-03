@@ -1,0 +1,47 @@
+<view class="container">
+  
+  <!-- Banner -->
+  <swiper class="banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="5000">
+    <swiper-item wx:for="{{banners}}" wx:key="id" bindtap="onBannerTap" data-index="{{index}}">
+      <image src="{{item.image}}" mode="aspectFill" class="banner-image" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 快捷入口 -->
+  <view class="quick-section">
+    <view class="quick-title">快速入口</view>
+    <view class="quick-grid">
+      <view 
+        class="quick-item" 
+        wx:for="{{quickLinks}}" 
+        wx:key="name"
+        bindtap="goToPage"
+        data-path="{{item.path}}"
+      >
+        <text class="quick-icon">{{item.icon}}</text>
+        <text class="quick-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 品牌介绍 -->
+  <view class="brand-section">
+    <text class="brand-title">华南留学</text>
+    <text class="brand-desc">专业的留学咨询服务</text>
+    <view class="brand-stats">
+      <view class="brand-stat">
+        <text class="brand-num">15年</text>
+        <text class="brand-label">行业经验</text>
+      </view>
+      <view class="brand-stat">
+        <text class="brand-num">5000+</text>
+        <text class="brand-label">成功案例</text>
+      </view>
+      <view class="brand-stat">
+        <text class="brand-num">98%</text>
+        <text class="brand-label">录取率</text>
+      </view>
+    </view>
+  </view>
+
+</view>

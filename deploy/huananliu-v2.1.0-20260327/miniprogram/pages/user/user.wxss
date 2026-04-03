@@ -1,0 +1,275 @@
+/* 用户中心页样式 */
+page {
+  background-color: #f5f7fa;
+}
+
+.container {
+  min-height: 100vh;
+  padding-bottom: 60rpx;
+}
+
+/* ==================== 用户卡片 ==================== */
+.user-card {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2a5298 100%);
+  margin: 20rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(30, 58, 95, 0.2);
+}
+
+.user-header {
+  padding: 40rpx 32rpx;
+}
+
+.user-info-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  background: #f0f0f0;
+  margin-right: 24rpx;
+}
+
+.user-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12rpx;
+}
+
+.login-tip {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.phone-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.user-phone {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.phone-tag {
+  font-size: 20rpx;
+  color: #1e3a5f;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.login-btn {
+  width: 180rpx;
+  height: 64rpx;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e3a5f;
+  font-size: 28rpx;
+  font-weight: 600;
+  border-radius: 32rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rpx;
+}
+
+.login-btn::after {
+  border: none;
+}
+
+.bind-phone-btn {
+  width: 160rpx;
+  height: 52rpx;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 24rpx;
+  border-radius: 26rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.bind-phone-btn::after {
+  border: none;
+}
+
+/* ==================== 统计栏 ==================== */
+.stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 24rpx 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-top: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.stats-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stats-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8rpx;
+}
+
+.stats-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.stats-divider {
+  width: 1rpx;
+  height: 60rpx;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==================== 菜单区域 ==================== */
+.menu-section {
+  margin: 20rpx;
+  background: #ffffff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  padding: 24rpx 32rpx 16rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.menu-list {
+  padding: 0 8rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 24rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:active {
+  background: #f8f9fa;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+  font-size: 32rpx;
+}
+
+.menu-icon.appointment {
+  background: #e8f4ff;
+}
+
+.menu-icon.favorite {
+  background: #fff5e6;
+}
+
+.menu-icon.history {
+  background: #f0f9ff;
+}
+
+.menu-icon.contact {
+  background: #e6f7ed;
+}
+
+.menu-icon.about {
+  background: #f5f0ff;
+}
+
+.menu-name {
+  font-size: 30rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.menu-extra {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: #cccccc;
+  font-weight: 300;
+}
+
+/* ==================== 退出登录 ==================== */
+.logout-section {
+  margin: 40rpx 20rpx;
+}
+
+.logout-btn {
+  width: 100%;
+  height: 88rpx;
+  background: #ffffff;
+  color: #ff4d4f;
+  font-size: 30rpx;
+  font-weight: 500;
+  border-radius: 44rpx;
+  border: 1rpx solid #ff4d4f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-btn::after {
+  border: none;
+}
+
+/* ==================== 版本信息 ==================== */
+.version-info {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999999;
+  padding: 20rpx 0 40rpx;
+}

@@ -1,0 +1,76 @@
+<!-- 案例列表页 -->
+<view class="container">
+  
+  <!-- 筛选栏 -->
+  <view class="filter-section">
+    <!-- 国家筛选 -->
+    <scroll-view class="filter-bar" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view 
+        class="filter-item {{selectedCountry === (item === '全部' ? '' : item) ? 'active' : ''}}"
+        wx:for="{{countryList}}"
+        wx:key="*this"
+        bindtap="onFilterCountry"
+        data-country="{{item}}"
+      >
+        {{item}}
+      </view>
+    </scroll-view>
+    
+    <!-- 学位筛选 -->
+    <scroll-view class="filter-bar degree-filter" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view 
+        class="filter-item {{selectedDegree === (item === '全部' ? '' : item) ? 'active' : ''}}"
+        wx:for="{{degreeList}}"
+        wx:key="*this"
+        bindtap="onFilterDegree"
+        data-degree="{{item}}"
+      >
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 案例列表 -->
+  <view class="case-list">
+    <view 
+      class="case-item card"
+      wx:for="{{caseList}}"
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="case-header">
+        <text class="case-student">{{item.student_name}}</text>
+        <view class="case-status tag-success">
+          <text>已录取</text>
+        </view>
+      </view>
+      
+      <view class="case-body">
+        <view class="case-info-row">
+          <text class="case-label">背景</text>
+          <text class="case-value">{{item.background || '暂无'}}</text>
+        </view>
+        <view class="case-info-row">
+          <text class="case-label">录取</text>
+          <text class="case-value highlight">{{item.school_name || '未知学校'}} - {{item.major || '未知专业'}}</text>
+        </view>
+        <view class="case-info-row" wx:if="{{item.consultant}}">
+          <text class="case-label">顾问</text>
+          <text class="case-value">{{item.consultant.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore && caseList.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+  <view class="empty-state" wx:if="{{!loading && caseList.length === 0}}">
+    <text>暂无案例数据</text>
+  </view>
+</view>

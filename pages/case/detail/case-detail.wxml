@@ -1,0 +1,125 @@
+<!-- 案例详情页 -->
+<view class="container">
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <block wx:else>
+    <!-- 首图 -->
+    <view class="cover-section" wx:if="{{caseInfo.cover}}">
+      <image class="cover-image" src="{{caseInfo.cover}}" mode="aspectFill" bindtap="previewImage" data-url="{{caseInfo.cover}}"></image>
+    </view>
+
+    <!-- 学生信息 -->
+    <view class="student-header card">
+      <view class="student-avatar">
+        <text class="avatar-text">{{caseInfo.studentName[0]}}</text>
+      </view>
+      <view class="student-info">
+        <text class="student-name">{{caseInfo.studentName}}</text>
+        <text class="student-degree tag tag-primary">{{caseInfo.degree}}</text>
+      </view>
+      <view class="case-result" wx:if="{{caseInfo.scholarship}}">
+        <text class="result-label">奖学金</text>
+        <text class="result-text text-success">{{caseInfo.scholarship}}</text>
+      </view>
+    </view>
+
+    <!-- 录取院校 -->
+    <view class="section card">
+      <view class="section-title">录取结果</view>
+      <view class="offer-card">
+        <text class="offer-school">{{caseInfo.offerSchool}}</text>
+        <text class="offer-major">{{caseInfo.offerMajor}}</text>
+        <view class="offer-tags">
+          <text class="tag tag-success" wx:if="{{caseInfo.qsRank}}">QS排名{{caseInfo.qsRank}}</text>
+          <text class="tag tag-primary">{{caseInfo.country}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 申请背景 -->
+    <view class="section card">
+      <view class="section-title">申请背景</view>
+      <view class="background-list">
+        <view class="bg-item">
+          <text class="bg-label">本科院校</text>
+          <text class="bg-value">{{caseInfo.background || '知名院校'}}</text>
+        </view>
+        <view class="bg-item">
+          <text class="bg-label">申请专业</text>
+          <text class="bg-value">{{caseInfo.major}}</text>
+        </view>
+        <view class="bg-item" wx:if="{{caseInfo.gpa}}">
+          <text class="bg-label">GPA/成绩</text>
+          <text class="bg-value">{{caseInfo.gpa}}</text>
+        </view>
+        <view class="bg-item" wx:if="{{caseInfo.language}}">
+          <text class="bg-label">语言成绩</text>
+          <text class="bg-value">{{caseInfo.language}}</text>
+        </view>
+        <view class="bg-item" wx:if="{{caseInfo.gre && caseInfo.gre !== '无'}}">
+          <text class="bg-label">GRE/GMAT</text>
+          <text class="bg-value">{{caseInfo.gre}}</text>
+        </view>
+        <view class="bg-item" wx:if="{{caseInfo.experience}}">
+          <text class="bg-label">实习/科研</text>
+          <text class="bg-value">{{caseInfo.experience}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 申请故事 -->
+    <view class="section card" wx:if="{{caseInfo.story}}">
+      <view class="section-title">申请故事</view>
+      <text class="story-content">{{caseInfo.story}}</text>
+    </view>
+
+    <!-- 申请材料 -->
+    <view class="section card" wx:if="{{caseInfo.materials && caseInfo.materials.length > 0}}">
+      <view class="section-title">申请材料</view>
+      <view class="material-list">
+        <text class="material-item" wx:for="{{caseInfo.materials}}" wx:key="*this">
+          ✓ {{item}}
+        </text>
+      </view>
+    </view>
+
+    <!-- 顾问点评 -->
+    <view class="section card" wx:if="{{caseInfo.consultant}}">
+      <view class="section-title">顾问点评</view>
+      <view class="consultant-review">
+        <view class="reviewer-info">
+          <view class="reviewer-avatar-wrap">
+            <image 
+              class="reviewer-avatar" 
+              src="{{caseInfo.consultant.avatar || '/images/icon/consult2.png'}}" 
+              mode="aspectFill"
+              binderror="onAvatarError"
+            ></image>
+          </view>
+          <view class="reviewer-details">
+            <text class="reviewer-name">{{caseInfo.consultant.name}}</text>
+            <text class="reviewer-title">{{caseInfo.consultant.title}}</text>
+          </view>
+        </view>
+        <text class="review-content">{{caseInfo.review}}</text>
+      </view>
+    </view>
+
+    <!-- 底部占位 -->
+    <view style="height: 120rpx;"></view>
+  </block>
+
+  <!-- 底部操作 -->
+  <view class="bottom-bar" wx:if="{{!loading && caseInfo}}">
+    <view class="action-item" bindtap="toggleCollect">
+      <text class="action-icon">{{isCollected ? '★' : '☆'}}</text>
+      <text class="action-text">{{isCollected ? '已收藏' : '收藏'}}</text>
+    </view>
+    <button class="action-btn btn-outline" open-type="share">分享案例</button>
+    <button class="action-btn" bindtap="makeAppointment">预约咨询</button>
+  </view>
+</view>

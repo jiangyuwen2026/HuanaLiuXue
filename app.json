@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/news/news",
+    "pages/news/detail/news-detail",
+    "pages/service/service",
+    "pages/case/case",
+    "pages/case/detail/case-detail",
+    "pages/school/school",
+    "pages/school/detail/school-detail",
+    "pages/consultant/consultant",
+    "pages/consultant/detail/consultant-detail",
+    "pages/appointment/appointment",
+    "pages/appointment/my-appointments",
+    "pages/user/favorites/favorites",
+    "pages/about/about",
+    "pages/user/user"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#2C5F7C",
+    "navigationBarTitleText": "华南留学",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F7FA"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#2C5F7C",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/news/news",
+        "text": "留学资讯",
+        "iconPath": "images/tab/news.png",
+        "selectedIconPath": "images/tab/news-active.png"
+      },
+      {
+        "pagePath": "pages/service/service",
+        "text": "产品服务",
+        "iconPath": "images/tab/service.png",
+        "selectedIconPath": "images/tab/service-active.png"
+      },
+      {
+        "pagePath": "pages/case/case",
+        "text": "成功案例",
+        "iconPath": "images/tab/case.png",
+        "selectedIconPath": "images/tab/case-active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/tab/user.png",
+        "selectedIconPath": "images/tab/user-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

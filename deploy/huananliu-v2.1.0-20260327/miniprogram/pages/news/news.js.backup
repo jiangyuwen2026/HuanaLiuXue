@@ -1,0 +1,228 @@
+// pages/news/news.js
+const app = getApp()
+
+const newsManager = require('../../../utils/newsManager')
+
+Page({
+  data: {
+    keyword: '',
+    selectedCountry: '',
+    selectedYear: '',
+    selectedCategory: '',
+    newsList: [],
+    filteredNewsList: [],
+    categories: [],
+    countries: [],
+    years: [],
+    loading: false,
+    refreshing: false,
+    hasMore: true,
+    page: 1,
+    pageSize: 10,
+    showFilterPanel: false
+  },
+
+  onLoad: function (options) {
+    console.log('新闻页面加载')
+    this.initPage()
+  },
+
+  onShow: function () {
+    console.log('新闻页面显示')
+  },
+
+  onPullDownRefresh: function () {
+    console.log('下拉刷新')
+    this.refreshData()
+  },
+
+  onReachBottom: function () {
+    console.log('触底加载更多')
+    if (this.data.hasMore && !this.data.loading) {
+      this.loadMoreNews()
+    }
+  },
+
+  initPage: function () {
+    try {
+      this.setData({ loading: true })
+      
+      // 获取所有新闻数据
+      const allNews = newsManager.getAllNews()
+      console.log('获取到新闻数据:', allNews ? allNews.length : 0, '条')
+      
+      if (!allNews || allNews.length === 0) {
+        console.error('未获取到新闻数据')
+        wx.showToast({
+          title: '暂无新闻数据',
+          icon: 'none'
+        })
+        this.setData({ loading: false })
+        return
+      }
+      
+      // 提取筛选条件
+      const categories = newsManager.getCategories()
+      const countries = newsManager.getCountries()
+      const years = newsManager.getYears()
+      
+      console.log('分类:', categories)
+      console.log('国家:', countries)
+      console.log('年份:', years)
+      
+      // 设置初始数据
+      this.setData({
+        newsList: allNews,
+        filteredNewsList: allNews,
+        categories: categories,
+        countries: countries,
+        years: years,
+        loading: false
+      })
+      
+      console.log('新闻页面初始化完成')
+      
+    } catch (error) {
+      console.error('初始化页面失败:', error)
+      wx.showModal({
+        title: '错误',
+        content: '页面初始化失败: ' + error.message,
+        showCancel: false
+      })
+      this.setData({ loading: false })
+    }
+  },
+
+  onSearchInput: function (e) {
+    const keyword = e.detail.value
+    this.setData({ keyword: keyword })
+    this.filterNews()
+  },
+
+  onCountryChange: function (e) {
+    const index = e.detail.value
+    const selectedCountry = index >= 0 ? this.data.countries[index] : ''
+    this.setData({ selectedCountry: selectedCountry })
+    this.filterNews()
+  },
+
+  onYearChange: function (e) {
+    const index = e.detail.value
+    const selectedYear = index >= 0 ? this.data.years[index] : ''
+    this.setData({ selectedYear: selectedYear })
+    this.filterNews()
+  },
+
+  onCategoryChange: function (e) {
+    const index = e.detail.value
+    const selectedCategory = index >= 0 ? this.data.categories[index] : ''
+    this.setData({ selectedCategory: selectedCategory })
+    this.filterNews()
+  },
+
+  toggleFilterPanel: function () {
+    this.setData({
+      showFilterPanel: !this.data.showFilterPanel
+    })
+  },
+
+  clearFilters: function () {
+    this.setData({
+      keyword: '',
+      selectedCountry: '',
+      selectedYear: '',
+      selectedCategory: '',
+      showFilterPanel: false
+    })
+    this.filterNews()
+  },
+
+  filterNews: function () {
+    try {
+      const { keyword, selectedCountry, selectedYear, selectedCategory, newsList } = this.data
+      
+      let filtered = newsList
+      
+      // 关键词筛选
+      if (keyword && keyword.trim()) {
+        filtered = newsManager.searchNews(keyword)
+      }
+      
+      // 国家筛选
+      if (selectedCountry) {
+        filtered = filtered.filter(item => item.country === selectedCountry)
+      }
+      
+      // 年份筛选
+      if (selectedYear) {
+        filtered = filtered.filter(item => item.year.toString() === selectedYear.toString())
+      }
+      
+      // 分类筛选
+      if (selectedCategory) {
+        filtered = filtered.filter(item => item.category === selectedCategory)
+      }
+      
+      this.setData({
+        filteredNewsList: filtered,
+        page: 1,
+        hasMore: filtered.length > this.data.pageSize
+      })
+      
+    } catch (error) {
+      console.error('筛选新闻失败:', error)
+    }
+  },
+
+  refreshData: function () {
+    this.setData({
+      refreshing: true,
+      page: 1
+    })
+    
+    // 重新加载数据
+    setTimeout(() => {
+      this.initPage()
+      this.setData({ refreshing: false })
+      wx.stopPullDownRefresh()
+    }, 500)
+  },
+
+  loadMoreNews: function () {
+    const { page, pageSize, filteredNewsList } = this.data
+    const nextPage = page + 1
+    
+    // 模拟加载更多数据
+    const startIndex = (nextPage - 1) * pageSize
+    const endIndex = startIndex + pageSize
+    const moreNews = filteredNewsList.slice(startIndex, endIndex)
+    
+    if (moreNews.length > 0) {
+      const newList = this.data.newsList.concat(moreNews)
+      this.setData({
+        newsList: newList,
+        filteredNewsList: newList,
+        page: nextPage,
+        hasMore: endIndex < filteredNewsList.length
+      })
+    } else {
+      this.setData({ hasMore: false })
+    }
+  },
+
+  onNewsTap: function (e) {
+    const id = e.currentTarget.dataset.id
+    console.log('点击新闻:', id)
+    
+    wx.navigateTo({
+      url: `/pages/news/detail/news-detail?id=${id}`
+    })
+  },
+
+  onShareAppMessage: function () {
+    return {
+      title: '留学资讯',
+      path: '/pages/news/news'
+    }
+  }
+})

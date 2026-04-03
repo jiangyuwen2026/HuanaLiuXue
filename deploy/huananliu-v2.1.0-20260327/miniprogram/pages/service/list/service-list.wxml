@@ -1,0 +1,11 @@
+<view class="container">
+  <view class="service-list">
+    <view class="service-item card" wx:for="{{serviceList}}" wx:key="id">
+      <text class="service-title">{{item.title}}</text>
+      <text class="service-desc">{{item.description}}</text>
+    </view>
+  </view>
+  <view class="empty-state" wx:if="{{!loading && serviceList.length === 0}}">
+    <text>暂无服务数据</text>
+  </view>
+</view>

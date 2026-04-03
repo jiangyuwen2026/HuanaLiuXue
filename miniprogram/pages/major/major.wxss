@@ -1,0 +1,113 @@
+/* 专业列表页样式 */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 20rpx;
+}
+
+/* 搜索栏 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+}
+
+.search-input {
+  flex: 1;
+  height: 64rpx;
+  background-color: #f5f5f5;
+  border-radius: 32rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+}
+
+.search-btn {
+  margin-left: 20rpx;
+  font-size: 28rpx;
+  color: #1890ff;
+}
+
+/* 分类网格 */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.category-item {
+  padding: 16rpx 0;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.category-item.active {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+/* 专业列表 */
+.major-list {
+  padding: 0 30rpx;
+}
+
+.major-item {
+  margin-bottom: 20rpx;
+}
+
+.major-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.major-name {
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  margin-right: 12rpx;
+}
+
+.major-category {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.major-school {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.major-footer {
+  padding-top: 12rpx;
+  border-top: 1rpx solid #f5f5f5;
+}
+
+.footer-info {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-state {
+  padding: 100rpx 0;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

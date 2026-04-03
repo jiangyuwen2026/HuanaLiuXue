@@ -1,0 +1,125 @@
+<!-- 顾问团队展示页 -->
+<view class="page-container">
+  <!-- 搜索头部 -->
+  <view class="search-header">
+    <view class="search-bar">
+      <view class="search-input-wrapper">
+        <text class="search-icon-placeholder">🔍</text>
+        <input class="search-input" 
+               placeholder="搜索顾问姓名" 
+               placeholder-class="search-placeholder"
+               value="{{keyword}}" 
+               bindinput="onSearchInput" />
+      </view>
+      <text class="search-btn" bindtap="onSearch">搜索</text>
+    </view>
+
+    <!-- 专长筛选 -->
+    <scroll-view class="expertise-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="expertise-item {{selectedExpertise === '' ? 'active' : ''}}" 
+            bindtap="onFilterExpertise" data-expertise="">
+        全部
+      </view>
+      <view class="expertise-item {{selectedExpertise === '香港' ? 'active' : ''}}" 
+            bindtap="onFilterExpertise" data-expertise="香港">
+        香港
+      </view>
+      <view class="expertise-item {{selectedExpertise === '新加坡' ? 'active' : ''}}" 
+            bindtap="onFilterExpertise" data-expertise="新加坡">
+        新加坡
+      </view>
+      <view class="expertise-item {{selectedExpertise === '英国' ? 'active' : ''}}" 
+            bindtap="onFilterExpertise" data-expertise="英国">
+        英国
+      </view>
+      <view class="expertise-item {{selectedExpertise === '澳大利亚' ? 'active' : ''}}" 
+            bindtap="onFilterExpertise" data-expertise="澳大利亚">
+        澳大利亚
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 顾问列表 -->
+  <view class="content-wrapper">
+    <view class="consultant-list" wx:if="{{consultantList.length > 0}}">
+      <view class="consultant-item card" 
+            wx:for="{{consultantList}}" 
+            wx:key="id" 
+            bindtap="goToDetail" 
+            data-id="{{item.id}}">
+        <!-- 顾问头像 -->
+        <view class="consultant-avatar-wrapper">
+          <image class="consultant-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+          <view class="senior-badge" wx:if="{{item.isSenior}}">
+            <text>资深</text>
+          </view>
+        </view>
+
+        <!-- 顾问信息 -->
+        <view class="consultant-content">
+          <view class="consultant-header">
+            <view class="name-row">
+              <text class="consultant-name">{{item.name}}</text>
+              <text class="consultant-title text-primary">{{item.title}}</text>
+            </view>
+            <view class="stats-row">
+              <view class="stat-item">
+                <text class="stat-value">{{item.experience}}</text>
+                <text class="stat-label">从业经验</text>
+              </view>
+              <view class="stat-divider"></view>
+              <view class="stat-item">
+                <text class="stat-value">{{item.caseCount}}+</text>
+                <text class="stat-label">服务案例</text>
+              </view>
+              <view class="stat-divider"></view>
+              <view class="stat-item">
+                <text class="stat-value text-success">{{item.successRate}}%</text>
+                <text class="stat-label">录取率</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 擅长领域 -->
+          <view class="consultant-tags" wx:if="{{item.expertise && item.expertise.length > 0}}">
+            <text class="consultant-tag" wx:for="{{item.expertise}}" wx:key="*this" wx:for-item="exp">{{exp}}</text>
+          </view>
+
+          <!-- 操作按钮 -->
+          <view class="consultant-footer">
+            <view class="consult-btn" bindtap="bookConsult" data-id="{{item.id}}" catchtap="bookConsult">
+              <text>预约咨询</text>
+            </view>
+            <view class="view-btn">
+              <text>查看详情</text>
+              <text class="arrow-text">›</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{consultantList.length === 0 && !loading}}">
+      <view class="empty-icon-wrapper">
+        <text class="empty-icon-text">👨‍💼</text>
+      </view>
+      <text class="empty-title">暂无相关顾问</text>
+      <text class="empty-desc">换个关键词试试看</text>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading" wx:if="{{loading}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+</view>
+
+<!-- 浮动咨询按钮 -->
+<view class="fab" bindtap="navigateTo" data-path="/pages/appointment/appointment">
+  <view class="fab-button">
+    <image class="fab-icon" src="/images/icon/consult2.png" mode="aspectFit"></image>
+    <text class="fab-text">咨询</text>
+  </view>
+</view>

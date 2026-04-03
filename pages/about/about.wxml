@@ -1,0 +1,110 @@
+<view class="container">
+  
+  <!-- 头部品牌区 -->
+  <view class="header-section">
+    <view class="logo-wrap">
+      <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+    </view>
+    <text class="company-name">{{companyInfo.name}}</text>
+    <text class="company-slogan">{{companyInfo.slogan}}</text>
+    <text class="version">V{{version}}</text>
+  </view>
+
+  <!-- 公司介绍 -->
+  <view class="section card">
+    <view class="section-title">公司简介</view>
+    <text class="section-content">{{companyInfo.description}}</text>
+    <view class="info-grid">
+      <view class="info-item">
+        <text class="info-label">成立时间</text>
+        <text class="info-value">{{companyInfo.founded}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">总部地点</text>
+        <text class="info-value">{{companyInfo.headquarters}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 核心优势 -->
+  <view class="section card">
+    <view class="section-title">核心优势</view>
+    <view class="features-grid">
+      <view class="feature-item" wx:for="{{features}}" wx:key="title">
+        <text class="feature-icon">{{item.icon}}</text>
+        <text class="feature-title">{{item.title}}</text>
+        <text class="feature-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系我们 -->
+  <view class="section card">
+    <view class="section-title">联系我们</view>
+    <view class="contact-list">
+      <view class="contact-item" bindtap="makePhoneCall">
+        <view class="contact-icon-wrap">
+          <text class="contact-icon">📞</text>
+        </view>
+        <view class="contact-info">
+          <text class="contact-label">服务热线</text>
+          <text class="contact-value">{{contactInfo.phone}}</text>
+        </view>
+        <text class="contact-arrow">›</text>
+      </view>
+      
+      <view class="contact-item" bindtap="copyEmail">
+        <view class="contact-icon-wrap">
+          <text class="contact-icon">✉️</text>
+        </view>
+        <view class="contact-info">
+          <text class="contact-label">电子邮箱</text>
+          <text class="contact-value">{{contactInfo.email}}</text>
+        </view>
+        <text class="contact-arrow">›</text>
+      </view>
+      
+      <view class="contact-item" bindtap="openMap">
+        <view class="contact-icon-wrap">
+          <text class="contact-icon">📍</text>
+        </view>
+        <view class="contact-info">
+          <text class="contact-label">公司地址</text>
+          <text class="contact-value">{{contactInfo.address}}</text>
+        </view>
+        <text class="contact-arrow">›</text>
+      </view>
+      
+      <view class="contact-item">
+        <view class="contact-icon-wrap">
+          <text class="contact-icon">🕐</text>
+        </view>
+        <view class="contact-info">
+          <text class="contact-label">工作时间</text>
+          <text class="contact-value">{{contactInfo.workTime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 相关链接 -->
+  <view class="section card">
+    <view class="link-list">
+      <view class="link-item" bindtap="showServiceTerms">
+        <text class="link-text">服务条款</text>
+        <text class="link-arrow">›</text>
+      </view>
+      <view class="link-item" bindtap="showPrivacyPolicy">
+        <text class="link-text">隐私政策</text>
+        <text class="link-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版权信息 -->
+  <view class="footer">
+    <text class="copyright">© 2025 {{companyInfo.name}} 版权所有</text>
+    <text class="icp">粤ICP备XXXXXXXX号</text>
+  </view>
+
+</view>

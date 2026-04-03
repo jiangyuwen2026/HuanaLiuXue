@@ -1,0 +1,91 @@
+<view class="container">
+  
+  <!-- Featured Cases 横向滚动 -->
+  <view class="featured-section" wx:if="{{featuredCases.length > 0}}">
+    <text class="section-title">精选案例</text>
+    <scroll-view class="featured-scroll" scroll-x="true" enhanced show-scrollbar="{{false}}">
+      <view 
+        class="featured-card"
+        wx:for="{{featuredCases}}"
+        wx:key="id"
+        style="background: {{item.bgColor}}"
+        bindtap="goToDetail"
+        data-id="{{item.id}}"
+      >
+        <text class="featured-tag">{{item.highlight}}</text>
+        <text class="featured-student">{{item.studentName}}</text>
+        <text class="featured-school">{{item.school}}</text>
+        <text class="featured-major">{{item.major}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-section">
+    <view class="filter-row">
+      <view 
+        class="filter-item {{countryTab === index ? 'active' : ''}}"
+        wx:for="{{countryTabs}}"
+        wx:key="*this"
+        data-index="{{index}}"
+        bindtap="switchCountryTab"
+      >
+        {{item}}
+      </view>
+    </view>
+    <view class="filter-row">
+      <view 
+        class="filter-item {{degreeTab === index ? 'active' : ''}}"
+        wx:for="{{degreeTabs}}"
+        wx:key="*this"
+        data-index="{{index}}"
+        bindtap="switchDegreeTab"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading && caseList.length === 0}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 案例列表 -->
+  <view class="case-list" wx:if="{{caseList.length > 0}}">
+    <view 
+      class="case-card"
+      wx:for="{{caseList}}"
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="case-header">
+        <text class="case-student">{{item.studentName}}</text>
+        <text class="case-result">已录取</text>
+      </view>
+      <view class="case-body">
+        <text class="case-info">背景：{{item.background}}</text>
+        <text class="case-offer">录取：{{item.school}} - {{item.major}}</text>
+      </view>
+    </view>
+    
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{hasMore}}">
+      <text wx:if="{{loading}}">加载中...</text>
+      <text wx:else>上拉加载更多</text>
+    </view>
+    <view class="no-more" wx:else>
+      <text>已经到底了</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:elif="{{!loading}}">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无相关案例</text>
+    <text class="empty-subtext">敬请期待更多精彩案例</text>
+  </view>
+
+</view>

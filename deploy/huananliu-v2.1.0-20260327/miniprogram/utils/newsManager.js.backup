@@ -1,0 +1,305 @@
+/**
+ * 新闻数据管理工具
+ * 用于查询、过滤、分类和管理留学咨询数据
+ */
+
+const newsData = require('./newsData');
+
+class NewsManager {
+  constructor() {
+    this.allNews = [...newsData['2025'], ...newsData['2026']];
+  }
+
+  /**
+   * 获取所有资讯
+   */
+  getAllNews() {
+    return this.allNews.sort((a, b) => new Date(b.publishTime) - new Date(a.publishTime));
+  }
+
+  /**
+   * 按年份获取资讯
+   */
+  getNewsByYear(year) {
+    return newsData[year] || [];
+  }
+
+  /**
+   * 按国家获取资讯
+   */
+  getNewsByCountry(country) {
+    return this.allNews.filter(news => news.country === country);
+  }
+
+  /**
+   * 按大学获取资讯
+   */
+  getNewsByUniversity(university) {
+    return this.allNews.filter(news => news.university === university);
+  }
+
+  /**
+   * 按分类获取资讯
+   */
+  getNewsByCategory(category) {
+    return this.allNews.filter(news => news.category === category);
+  }
+
+  /**
+   * 按年份和学期筛选
+   */
+  getNewsByYearAndSemester(year, semester) {
+    const yearNews = this.getNewsByYear(year);
+    return yearNews.filter(news => news.semester === semester);
+  }
+
+  /**
+   * 搜索资讯（标题和摘要）
+   */
+  searchNews(keyword) {
+    const keywordLower = keyword.toLowerCase();
+    return this.allNews.filter(news =>
+      news.title.toLowerCase().includes(keywordLower) ||
+      news.summary.toLowerCase().includes(keywordLower) ||
+      news.content.toLowerCase().includes(keywordLower)
+    );
+  }
+
+  /**
+   * 获取最新资讯
+   */
+  getLatestNews(count = 10) {
+    return this.allNews.sort((a, b) => new Date(b.publishTime) - new Date(a.publishTime)).slice(0, count);
+  }
+
+  /**
+   * 获取热门资讯（按浏览量）
+   */
+  getHotNews(count = 10) {
+    return this.allNews.sort((a, b) => b.views - a.views).slice(0, count);
+  }
+
+  /**
+   * 获取相关资讯
+   */
+  getRelatedArticles(articleId, count = 4) {
+    const article = this.getArticleById(articleId);
+    if (!article || !article.relatedArticles) return [];
+
+    return article.relatedArticles
+      .map(id => this.getArticleById(id))
+      .filter(item => item !== null)
+      .slice(0, count);
+  }
+
+  /**
+   * 按ID获取文章详情
+   */
+  getArticleById(id) {
+    return this.allNews.find(news => news.id === id);
+  }
+
+  /**
+   * 获取所有分类
+   */
+  getCategories() {
+    const categories = new Set(this.allNews.map(news => news.category));
+    return Array.from(categories);
+  }
+
+  /**
+   * 获取所有国家
+   */
+  getCountries() {
+    const countries = new Set(this.allNews.map(news => news.country));
+    return Array.from(countries);
+  }
+
+  /**
+   * 获取所有大学
+   */
+  getUniversities() {
+    const universities = new Set(this.allNews.map(news => news.university));
+    return Array.from(universities);
+  }
+
+  /**
+   * 获取所有标签
+   */
+  getTags() {
+    const tags = new Set();
+    this.allNews.forEach(news => {
+      if (news.tags) {
+        news.tags.forEach(tag => tags.add(tag));
+      }
+    });
+    return Array.from(tags);
+  }
+
+  /**
+   * 按标签筛选
+   */
+  getNewsByTag(tag) {
+    return this.allNews.filter(news =>
+      news.tags && news.tags.includes(tag)
+    );
+  }
+
+  /**
+   * 高级筛选
+   */
+  filterNews(filters = {}) {
+    let results = [...this.allNews];
+
+    if (filters.year) {
+      results = results.filter(news => news.year === filters.year);
+    }
+
+    if (filters.country) {
+      results = results.filter(news => news.country === filters.country);
+    }
+
+    if (filters.university) {
+      results = results.filter(news => news.university === filters.university);
+    }
+
+    if (filters.category) {
+      results = results.filter(news => news.category === filters.category);
+    }
+
+    if (filters.keyword) {
+      results = results.filter(news =>
+        news.title.toLowerCase().includes(filters.keyword.toLowerCase()) ||
+        news.summary.toLowerCase().includes(filters.keyword.toLowerCase())
+      );
+    }
+
+    if (filters.startDate) {
+      results = results.filter(news =>
+        new Date(news.publishTime) >= new Date(filters.startDate)
+      );
+    }
+
+    if (filters.endDate) {
+      results = results.filter(news =>
+        new Date(news.publishTime) <= new Date(filters.endDate)
+      );
+    }
+
+    return results.sort((a, b) => new Date(b.publishTime) - new Date(a.publishTime));
+  }
+
+  /**
+   * 分页获取资讯
+   */
+  getNewsByPage(page = 1, pageSize = 10, filters = {}) {
+    const filteredList = filters && Object.keys(filters).length > 0
+      ? this.filterNews(filters)
+      : this.getAllNews();
+
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    return {
+      list: filteredList.slice(startIndex, endIndex),
+      total: filteredList.length,
+      page,
+      pageSize,
+      totalPages: Math.ceil(filteredList.length / pageSize)
+    };
+  }
+
+  /**
+   * 获取统计数据
+   */
+  getStatistics() {
+    const stats = {
+      total: this.allNews.length,
+      byYear: {},
+      byCountry: {},
+      byCategory: {},
+      byUniversity: {},
+      bySemester: {},
+      totalViews: 0,
+      avgViews: 0
+    };
+
+    this.allNews.forEach(news => {
+      // 按年份
+      if (!stats.byYear[news.year]) stats.byYear[news.year] = 0;
+      stats.byYear[news.year]++;
+
+      // 按国家
+      if (!stats.byCountry[news.country]) stats.byCountry[news.country] = 0;
+      stats.byCountry[news.country]++;
+
+      // 按分类
+      if (!stats.byCategory[news.category]) stats.byCategory[news.category] = 0;
+      stats.byCategory[news.category]++;
+
+      // 按大学
+      if (!stats.byUniversity[news.university]) stats.byUniversity[news.university] = 0;
+      stats.byUniversity[news.university]++;
+
+      // 按学期
+      const key = `${news.year}-${news.semester}`;
+      if (!stats.bySemester[key]) stats.bySemester[key] = 0;
+      stats.bySemester[key]++;
+
+      // 浏览量
+      stats.totalViews += news.views || 0;
+    });
+
+    stats.avgViews = Math.round(stats.totalViews / stats.total);
+
+    return stats;
+  }
+
+  /**
+   * 获取推荐资讯（基于当前文章的分类和标签）
+   */
+  getRecommendedNews(articleId, count = 5) {
+    const currentArticle = this.getArticleById(articleId);
+    if (!currentArticle) return [];
+
+    const scored = this.allNews
+      .filter(news => news.id !== articleId)
+      .map(news => {
+        let score = 0;
+
+        // 同分类加分
+        if (news.category === currentArticle.category) score += 3;
+
+        // 同国家加分
+        if (news.country === currentArticle.country) score += 2;
+
+        // 同大学加分
+        if (news.university === currentArticle.university) score += 2;
+
+        // 共同标签加分
+        if (news.tags && currentArticle.tags) {
+          const commonTags = news.tags.filter(tag => currentArticle.tags.includes(tag));
+          score += commonTags.length * 1.5;
+        }
+
+        // 时间越新分数越高
+        const daysDiff = (new Date() - new Date(news.publishTime)) / (1000 * 60 * 60 * 24);
+        score += Math.max(0, 10 - daysDiff / 30);
+
+        return { ...news, score };
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, count)
+      .map(item => {
+        const { score, ...news } = item;
+        return news;
+      });
+
+    return scored;
+  }
+}
+
+// 创建单例
+const newsManager = new NewsManager();
+
+module.exports = newsManager;

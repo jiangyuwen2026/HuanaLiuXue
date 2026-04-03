@@ -1,0 +1,151 @@
+<!-- 智能客服页面 -->
+<view class="customer-service-container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <text class="icon">‹</text>
+    </view>
+    <view class="header-info">
+      <text class="title">智能客服</text>
+      <text class="status {{isOnline ? 'online' : 'offline'}}">
+        {{isOnline ? '在线' : '离线'}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 对话区域 -->
+  <scroll-view
+    class="chat-area"
+    scroll-y="{{true}}"
+    scroll-into-view="{{scrollToView}}"
+    scroll-with-animation="{{true}}"
+  >
+    <!-- 欢迎消息 -->
+    <view class="message welcome" wx:if="{{showWelcome}}">
+      <view class="message-content robot">
+        <image class="avatar" src="{{robotAvatar}}" mode="aspectFill"></image>
+        <view class="bubble">
+          <text class="text">您好！我是华南留学的智能客服助手，很高兴为您服务！\n\n我可以帮您解答以下问题：</text>
+          <view class="quick-replies">
+            <view class="quick-reply-item" wx:for="{{quickReplies}}" wx:key="index" bindtap="sendQuickReply" data-content="{{item}}">
+              <text>{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 消息列表 -->
+    <view class="message {{item.type}}" wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
+      <!-- 机器人消息 -->
+      <view class="message-content robot" wx:if="{{item.type === 'robot'}}">
+        <image class="avatar" src="{{robotAvatar}}" mode="aspectFill"></image>
+        <view class="bubble">
+          <!-- 文本消息 -->
+          <text class="text" wx:if="{{item.messageType === 'text'}}">{{item.content}}</text>
+
+          <!-- 图片消息 -->
+          <image class="image" src="{{item.content}}" mode="widthFix" wx:if="{{item.messageType === 'image'}}" bindtap="previewImage" data-url="{{item.content}}"></image>
+
+          <!-- 快捷回复 -->
+          <view class="quick-replies" wx:if="{{item.quickReplies && item.quickReplies.length > 0}}">
+            <view class="quick-reply-item" wx:for="{{item.quickReplies}}" wx:for-item="reply" wx:key="index" bindtap="sendQuickReply" data-content="{{reply}}">
+              <text>{{reply}}</text>
+            </view>
+          </view>
+
+          <!-- 转人工提示 -->
+          <view class="transfer-human" wx:if="{{item.showTransferHuman}}" bindtap="transferToHuman">
+            <text>👤 转人工客服</text>
+          </view>
+
+          <text class="time">{{item.time}}</text>
+        </view>
+      </view>
+
+      <!-- 用户消息 -->
+      <view class="message-content user" wx:if="{{item.type === 'user'}}">
+        <view class="bubble">
+          <!-- 文本消息 -->
+          <text class="text" wx:if="{{item.messageType === 'text'}}">{{item.content}}</text>
+
+          <!-- 图片消息 -->
+          <image class="image" src="{{item.content}}" mode="widthFix" wx:if="{{item.messageType === 'image'}}" bindtap="previewImage" data-url="{{item.content}}"></image>
+
+          <text class="time">{{item.time}}</text>
+        </view>
+        <image class="avatar" src="{{userAvatar}}" mode="aspectFill"></image>
+      </view>
+
+      <!-- 人工客服消息 -->
+      <view class="message-content human" wx:if="{{item.type === 'human'}}">
+        <image class="avatar" src="{{humanAvatar}}" mode="aspectFill"></image>
+        <view class="bubble">
+          <text class="text" wx:if="{{item.messageType === 'text'}}">{{item.content}}</text>
+          <image class="image" src="{{item.content}}" mode="widthFix" wx:if="{{item.messageType === 'image'}}" bindtap="previewImage" data-url="{{item.content}}"></image>
+          <text class="time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载中 -->
+    <view class="message loading" wx:if="{{isLoading}}">
+      <view class="message-content robot">
+        <image class="avatar" src="{{robotAvatar}}" mode="aspectFill"></image>
+        <view class="bubble">
+          <view class="typing-indicator">
+            <view class="dot"></view>
+            <view class="dot"></view>
+            <view class="dot"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <!-- 功能按钮 -->
+    <view class="function-btns">
+      <view class="function-btn" bindtap="chooseImage">
+        <text class="icon">📷</text>
+      </view>
+      <view class="function-btn" bindtap="chooseFile">
+        <text class="icon">📎</text>
+      </view>
+    </view>
+
+    <!-- 输入框 -->
+    <input
+      class="input"
+      type="text"
+      placeholder="请输入您的问题..."
+      value="{{inputValue}}"
+      bindinput="onInput"
+      bindconfirm="sendMessage"
+      confirm-type="send"
+    />
+
+    <!-- 发送按钮 -->
+    <view class="send-btn {{inputValue ? 'active' : ''}}" bindtap="sendMessage">
+      <text class="icon">发送</text>
+    </view>
+  </view>
+
+  <!-- 转人工确认弹窗 -->
+  <view class="modal-mask" wx:if="{{showTransferModal}}" bindtap="cancelTransfer">
+    <view class="modal" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">转人工客服</text>
+      </view>
+      <view class="modal-body">
+        <text class="modal-desc">是否确认转接人工客服？</text>
+        <text class="modal-desc">人工客服工作时间为：9:00-21:00</text>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="cancelTransfer">取消</view>
+        <view class="modal-btn confirm" bindtap="confirmTransfer">确认转接</view>
+      </view>
+    </view>
+  </view>
+</view>

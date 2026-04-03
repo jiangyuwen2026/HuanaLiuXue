@@ -1,0 +1,57 @@
+# 华南留学平台版本信息
+# South China Study Abroad Platform - Version Information
+# ============================================================================
+# 此文件用于AI快速识别项目版本状态
+# This file is for AI to quickly identify project version status
+# ============================================================================
+
+VERSION=1.0.0-FINAL
+RELEASE_DATE=2026-03-25
+STATUS=FROZEN
+
+# 版本说明
+# Version Description
+# - FROZEN: 版本已冻结，禁止修改 / Version frozen, modifications prohibited
+# - ACTIVE: 活跃开发版本 / Active development version
+# - DEPRECATED: 已弃用 / Deprecated
+
+# 模块版本 / Module Versions
+FRONTEND_WEBSITE_VERSION=1.0.0-FINAL
+FRONTEND_ADMIN_VERSION=1.0.0-FINAL
+BACKEND_VERSION=1.0.0-FINAL
+
+# 技术栈 / Tech Stack
+FRONTEND_STACK=React 18 + Vite + TailwindCSS + React Router
+ADMIN_STACK=React 18 + Vite + Ant Design + React Router
+BACKEND_STACK=Node.js + Express + Sequelize ORM + MySQL + JWT
+
+# 关键特性 / Key Features
+FEATURES=(
+  "学校展示系统 / School Display System"
+  "案例展示系统 / Case Display System"
+  "顾问展示系统 / Consultant Display System"
+  "新闻资讯系统 / News System"
+  "服务展示系统 / Service Display System"
+  "留学评估表单 / Assessment Form"
+  "用户评价轮播 / Testimonials Carousel"
+  "明星案例展示 / Featured Cases"
+  "推荐新闻管理 / Recommended News"
+  "后台管理系统 / Admin Dashboard"
+)
+
+# 端口配置 / Port Configuration
+PORT_WEBSITE=3000
+PORT_BACKEND=3001
+PORT_ADMIN=3002
+
+# 数据库 / Database
+DB_TYPE=MySQL
+DB_NAME=huananliu
+
+# AI提示 / AI Hint
+# 如果你是AI助手，在阅读此文件后，请查阅以下文档获取完整信息：
+# If you are an AI assistant, after reading this file, please refer to:
+# - PRODUCT_MANUAL.md    - 产品说明书 / Product Manual
+# - DESIGN_MANUAL.md     - 设计说明书 / Design Manual
+# - AI_CONTEXT.md        - AI上下文文档 / AI Context Document
+# ============================================================================

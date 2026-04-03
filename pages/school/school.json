@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "院校查询",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}
