@@ -362,11 +362,212 @@ const Testimonial = sequelize.define('Testimonial', {
   updatedAt: 'updated_at'
 });
 
+// ==================== 雅思/托福题库系统模型 ====================
+
+// 1. 题目分类模型
+const QuestionCategory = sequelize.define('QuestionCategory', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  exam_type: { type: DataTypes.STRING(20), allowNull: false, comment: 'ielts, toefl' },
+  subject: { type: DataTypes.STRING(20), allowNull: false, comment: 'listening, reading, writing, speaking' },
+  name: { type: DataTypes.STRING(50), allowNull: false },
+  parent_id: { type: DataTypes.INTEGER.UNSIGNED, defaultValue: 0 },
+  sort_order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  status: { type: DataTypes.TINYINT, defaultValue: 1 }
+}, {
+  tableName: 'question_categories',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+});
+
+// 2. 知识点标签模型
+const QuestionTag = sequelize.define('QuestionTag', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING(50), allowNull: false, unique: true },
+  color: { type: DataTypes.STRING(20), defaultValue: '#2C5F7C' },
+  sort_order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  status: { type: DataTypes.TINYINT, defaultValue: 1 }
+}, {
+  tableName: 'question_tags',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+});
+
+// 3. 题目模型
+const Question = sequelize.define('Question', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  category_id: { type: DataTypes.INTEGER.UNSIGNED, defaultValue: 0 },
+  exam_type: { type: DataTypes.STRING(20), allowNull: false },
+  subject: { type: DataTypes.STRING(20), allowNull: false },
+  type: { type: DataTypes.STRING(30), allowNull: false },
+  title: { type: DataTypes.TEXT },
+  content: { type: DataTypes.TEXT },
+  options: { type: DataTypes.JSON },
+  correct_answer: { type: DataTypes.TEXT },
+  answer_analysis: { type: DataTypes.TEXT },
+  sample_answer: { type: DataTypes.TEXT },
+  difficulty: { type: DataTypes.TINYINT, defaultValue: 2 },
+  score: { type: DataTypes.DECIMAL(5, 2), defaultValue: 1.00 },
+  knowledge_points: { type: DataTypes.JSON },
+  audio_url: { type: DataTypes.STRING(500) },
+  images: { type: DataTypes.JSON },
+  passage: { type: DataTypes.TEXT },
+  time_limit: { type: DataTypes.INTEGER, defaultValue: 0 },
+  usage_count: { type: DataTypes.INTEGER, defaultValue: 0 },
+  status: { type: DataTypes.TINYINT, defaultValue: 1 }
+}, {
+  tableName: 'questions',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+});
+
+// 4. 题目标签关联模型
+const QuestionTagRelation = sequelize.define('QuestionTagRelation', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  question_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  tag_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false }
+}, {
+  tableName: 'question_tag_relations',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  indexes: [
+    { unique: true, fields: ['question_id', 'tag_id'] },
+    { fields: ['tag_id'] }
+  ]
+});
+
+// 5. 试卷模型
+const ExamPaper = sequelize.define('ExamPaper', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING(200), allowNull: false },
+  exam_type: { type: DataTypes.STRING(20), allowNull: false },
+  subject: { type: DataTypes.STRING(20) },
+  description: { type: DataTypes.TEXT },
+  total_score: { type: DataTypes.DECIMAL(6, 2), defaultValue: 0 },
+  time_limit: { type: DataTypes.INTEGER, defaultValue: 0 },
+  question_count: { type: DataTypes.INTEGER, defaultValue: 0 },
+  is_official: { type: DataTypes.TINYINT, defaultValue: 0 },
+  sort_order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  status: { type: DataTypes.TINYINT, defaultValue: 1 }
+}, {
+  tableName: 'exam_papers',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+});
+
+// 6. 试卷题目关联模型
+const ExamPaperQuestion = sequelize.define('ExamPaperQuestion', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  paper_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  question_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  sort_order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  score: { type: DataTypes.DECIMAL(5, 2), defaultValue: 1.00 }
+}, {
+  tableName: 'exam_paper_questions',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  indexes: [
+    { unique: true, fields: ['paper_id', 'question_id'] },
+    { fields: ['question_id'] }
+  ]
+});
+
+// 7. 用户考试记录模型
+const UserExam = sequelize.define('UserExam', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  user_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  paper_id: { type: DataTypes.INTEGER.UNSIGNED, defaultValue: 0 },
+  exam_type: { type: DataTypes.STRING(20) },
+  subject: { type: DataTypes.STRING(20) },
+  mode: { type: DataTypes.STRING(20), defaultValue: 'practice' },
+  title: { type: DataTypes.STRING(200) },
+  total_questions: { type: DataTypes.INTEGER, defaultValue: 0 },
+  answered_questions: { type: DataTypes.INTEGER, defaultValue: 0 },
+  correct_count: { type: DataTypes.INTEGER, defaultValue: 0 },
+  total_score: { type: DataTypes.DECIMAL(6, 2), defaultValue: 0 },
+  user_score: { type: DataTypes.DECIMAL(6, 2), defaultValue: 0 },
+  time_spent: { type: DataTypes.INTEGER, defaultValue: 0 },
+  status: { type: DataTypes.TINYINT, defaultValue: 0 },
+  started_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+  submitted_at: { type: DataTypes.DATE }
+}, {
+  tableName: 'user_exams',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+});
+
+// 8. 用户答题记录模型
+const UserAnswer = sequelize.define('UserAnswer', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  exam_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  user_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  question_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  user_answer: { type: DataTypes.TEXT },
+  is_correct: { type: DataTypes.TINYINT, defaultValue: 0 },
+  score: { type: DataTypes.DECIMAL(5, 2), defaultValue: 0 },
+  time_spent: { type: DataTypes.INTEGER, defaultValue: 0 },
+  answer_analysis: { type: DataTypes.TEXT }
+}, {
+  tableName: 'user_answers',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  indexes: [
+    { unique: true, fields: ['exam_id', 'question_id'] }
+  ]
+});
+
+// 9. 用户错题本模型
+const UserWrongQuestion = sequelize.define('UserWrongQuestion', {
+  id: { type: DataTypes.INTEGER.UNSIGNED, primaryKey: true, autoIncrement: true },
+  user_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  question_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  wrong_count: { type: DataTypes.INTEGER, defaultValue: 1 },
+  last_wrong_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+  is_mastered: { type: DataTypes.TINYINT, defaultValue: 0 },
+  mastered_at: { type: DataTypes.DATE }
+}, {
+  tableName: 'user_wrong_questions',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  indexes: [
+    { unique: true, fields: ['user_id', 'question_id'] }
+  ]
+});
+
 // 建立关联关系
 Consultant.hasMany(Case, { foreignKey: 'consultant_id', as: 'cases' });
 School.hasMany(Case, { foreignKey: 'school_id', as: 'cases' });
 Case.belongsTo(Consultant, { foreignKey: 'consultant_id', as: 'consultant' });
 Case.belongsTo(School, { foreignKey: 'school_id', as: 'school' });
+
+// 题库系统关联关系
+QuestionCategory.hasMany(Question, { foreignKey: 'category_id', as: 'questions' });
+Question.belongsTo(QuestionCategory, { foreignKey: 'category_id', as: 'category' });
+
+Question.belongsToMany(QuestionTag, { through: QuestionTagRelation, foreignKey: 'question_id', as: 'tags' });
+QuestionTag.belongsToMany(Question, { through: QuestionTagRelation, foreignKey: 'tag_id', as: 'questions' });
+
+ExamPaper.belongsToMany(Question, { through: ExamPaperQuestion, foreignKey: 'paper_id', as: 'questions' });
+Question.belongsToMany(ExamPaper, { through: ExamPaperQuestion, foreignKey: 'question_id', as: 'papers' });
+
+User.hasMany(UserExam, { foreignKey: 'user_id', as: 'exams' });
+UserExam.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+UserExam.hasMany(UserAnswer, { foreignKey: 'exam_id', as: 'answers' });
+UserAnswer.belongsTo(UserExam, { foreignKey: 'exam_id', as: 'exam' });
+UserAnswer.belongsTo(Question, { foreignKey: 'question_id', as: 'question' });
+
+User.hasMany(UserWrongQuestion, { foreignKey: 'user_id', as: 'wrongQuestions' });
+UserWrongQuestion.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+UserWrongQuestion.belongsTo(Question, { foreignKey: 'question_id', as: 'question' });
 
 module.exports = {
   sequelize,
@@ -384,5 +585,15 @@ module.exports = {
   Competition,
   StudyNews,
   Testimonial,
-  User
+  User,
+  // 题库系统模型
+  QuestionCategory,
+  QuestionTag,
+  Question,
+  QuestionTagRelation,
+  ExamPaper,
+  ExamPaperQuestion,
+  UserExam,
+  UserAnswer,
+  UserWrongQuestion
 };

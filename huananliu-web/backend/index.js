@@ -43,6 +43,11 @@ const aboutRouter = require('./routes/about');
 const studyNewsRouter = require('./routes/studyNews');
 const { router: testimonialsRouter, initDefaultTestimonials } = require('./routes/testimonials');
 
+// 雅思/托福题库系统路由
+const questionsRouter = require('./routes/questions');
+const examRouter = require('./routes/exam');
+const examPapersRouter = require('./routes/examPapers');
+
 const app = express();
 
 // 中间件
@@ -104,6 +109,14 @@ console.log('✅ 留学快讯路由已加载: /api/study-news');
 // 学生留言路由
 app.use('/api/testimonials', testimonialsRouter);
 console.log('✅ 留言路由已加载: /api/testimonials');
+
+// 雅思/托福题库系统路由
+app.use('/api/questions', questionsRouter);
+app.use('/api/exam', examRouter);
+app.use('/api/exam-papers', examPapersRouter);
+console.log('✅ 题库路由已加载: /api/questions');
+console.log('✅ 考试路由已加载: /api/exam');
+console.log('✅ 试卷路由已加载: /api/exam-papers');
 
 // 健康检查
 app.get('/api/health', (req, res) => {
