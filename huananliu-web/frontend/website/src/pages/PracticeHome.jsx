@@ -101,7 +101,7 @@ function PracticeHome() {
       exam_type: selectedExam,
       ...(subject && { subject })
     });
-    navigate(`/practice/exam?${params}`);
+    navigate(`/english-training/exam?${params}`);
   };
 
   return (
@@ -216,7 +216,7 @@ function PracticeHome() {
         {/* 快捷入口 */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Link
-            to="/practice/wrong-book"
+            to="/english-training/wrong-book"
             className="bg-red-50 rounded-2xl p-6 hover:shadow-lg transition-all flex items-center gap-4"
           >
             <div className="w-14 h-14 rounded-xl bg-red-500 flex items-center justify-center">
@@ -229,15 +229,15 @@ function PracticeHome() {
           </Link>
 
           <Link
-            to="/practice/history"
+            to="/english-training/leaderboard"
             className="bg-blue-50 rounded-2xl p-6 hover:shadow-lg transition-all flex items-center gap-4"
           >
             <div className="w-14 h-14 rounded-xl bg-blue-500 flex items-center justify-center">
-              <RotateCcw className="w-7 h-7 text-white" />
+              <Trophy className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900">练习记录</h3>
-              <p className="text-gray-500 text-sm">查看历史练习</p>
+              <h3 className="text-lg font-bold text-gray-900">排行榜</h3>
+              <p className="text-gray-500 text-sm">查看学习排名</p>
             </div>
           </Link>
 

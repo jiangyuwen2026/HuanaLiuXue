@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { submitMessage } from '../utils/api';
+import { BookOpen, Clock, Trophy, Target, ChevronRight } from 'lucide-react';
 
 const EnglishTraining = () => {
   const [formData, setFormData] = useState({
@@ -259,6 +260,84 @@ const EnglishTraining = () => {
                   <div className="text-white/60 text-xs mt-1">{stat.desc}</div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Online Practice Entry */}
+      <section className="py-16 bg-gradient-to-br from-[#2C5F7C] to-[#3A7CA5]">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center text-white mb-10">
+              <span className="inline-flex items-center px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full mb-4 border border-white/30">
+                <Target className="w-4 h-4 mr-2" />
+                在线刷题系统
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">
+                雅思/托福在线刷题
+              </h2>
+              <p className="text-blue-100 text-lg max-w-2xl mx-auto">
+                海量真题 + 智能分析 + 错题本，随时随地高效备考
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Link 
+                to="/english-training/practice" 
+                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all group"
+              >
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <BookOpen className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1">专项练习</h3>
+                <p className="text-blue-100 text-sm">按科目分类针对性训练</p>
+                <div className="mt-3 flex items-center text-white text-sm font-medium">
+                  开始练习 <ChevronRight className="w-4 h-4 ml-1" />
+                </div>
+              </Link>
+              
+              <Link 
+                to="/english-training/practice" 
+                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all group"
+              >
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Clock className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1">模拟考试</h3>
+                <p className="text-blue-100 text-sm">全真模考检验水平</p>
+                <div className="mt-3 flex items-center text-white text-sm font-medium">
+                  开始模考 <ChevronRight className="w-4 h-4 ml-1" />
+                </div>
+              </Link>
+              
+              <Link 
+                to="/english-training/wrong-book" 
+                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all group"
+              >
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <BookOpen className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1">错题本</h3>
+                <p className="text-blue-100 text-sm">针对性攻克薄弱点</p>
+                <div className="mt-3 flex items-center text-white text-sm font-medium">
+                  查看错题 <ChevronRight className="w-4 h-4 ml-1" />
+                </div>
+              </Link>
+              
+              <Link 
+                to="/english-training/leaderboard" 
+                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all group"
+              >
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Trophy className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1">排行榜</h3>
+                <p className="text-blue-100 text-sm">与全国考生一较高下</p>
+                <div className="mt-3 flex items-center text-white text-sm font-medium">
+                  查看排名 <ChevronRight className="w-4 h-4 ml-1" />
+                </div>
+              </Link>
             </div>
           </div>
         </div>

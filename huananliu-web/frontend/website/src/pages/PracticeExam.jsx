@@ -209,7 +209,7 @@ function PracticeExam() {
 
       const result = await res.json();
       if (result.success) {
-        navigate(`/practice/report/${examId}`);
+        navigate(`/english-training/report/${examId}`);
       }
     } catch (error) {
       console.error('提交失败', error);
@@ -235,7 +235,7 @@ function PracticeExam() {
           <AlertCircle className="w-16 h-16 text-orange-500 mx-auto mb-4" />
           <p className="text-gray-600">暂无符合条件的题目</p>
           <button
-            onClick={() => navigate('/practice')}
+            onClick={() => navigate('/english-training')}
             className="mt-4 px-6 py-2 bg-[#2C5F7C] text-white rounded-lg"
           >
             返回刷题首页
@@ -256,7 +256,7 @@ function PracticeExam() {
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate('/practice')}
+              onClick={() => navigate('/english-training')}
               className="p-2 hover:bg-gray-100 rounded-lg"
             >
               <ChevronLeft className="w-5 h-5" />

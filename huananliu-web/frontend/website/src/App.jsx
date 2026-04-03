@@ -12,19 +12,21 @@ import NewsDetail from './pages/NewsDetail';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import Apply from './pages/Apply';
-import EnglishTraining from './pages/EnglishTraining';
 import Competition from './pages/Competition';
 import CompetitionDetail from './pages/CompetitionDetail';
 import Research from './pages/Research';
 import Appointment from './pages/Appointment';
 import StudyNews from './pages/StudyNews';
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+// 英语培训模块页面
+import EnglishTraining from './pages/EnglishTraining';
 import PracticeHome from './pages/PracticeHome';
 import PracticeExam from './pages/PracticeExam';
 import ExamReport from './pages/ExamReport';
 import WrongBook from './pages/WrongBook';
 import Leaderboard from './pages/Leaderboard';
-import Header from './components/Header';
-import Footer from './components/Footer';
 
 // 错误边界
 class ErrorBoundary extends React.Component {
@@ -86,11 +88,13 @@ function App() {
               <Route path="/appointment" element={<Appointment />} />
               <Route path="/study-news" element={<StudyNews />} />
               <Route path="/study-news/:id" element={<StudyNews />} />
-              <Route path="/practice" element={<PracticeHome />} />
-              <Route path="/practice/exam" element={<PracticeExam />} />
-              <Route path="/practice/report/:examId" element={<ExamReport />} />
-              <Route path="/practice/wrong-book" element={<WrongBook />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
+              {/* 英语培训模块 */}
+              <Route path="/english-training" element={<EnglishTraining />} />
+              <Route path="/english-training/practice" element={<PracticeHome />} />
+              <Route path="/english-training/exam" element={<PracticeExam />} />
+              <Route path="/english-training/report/:examId" element={<ExamReport />} />
+              <Route path="/english-training/wrong-book" element={<WrongBook />} />
+              <Route path="/english-training/leaderboard" element={<Leaderboard />} />
             </Routes>
           </ErrorBoundary>
         </main>

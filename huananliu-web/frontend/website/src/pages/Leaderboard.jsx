@@ -317,7 +317,7 @@ function Leaderboard() {
         {/* 提示 */}
         <div className="mt-6 text-center text-gray-500 text-sm">
           <p>排行榜每小时更新一次，只显示模考模式的成绩</p>
-          <Link to="/practice" className="text-[#2C5F7C] hover:underline mt-2 inline-block">
+          <Link to="/english-training" className="text-[#2C5F7C] hover:underline mt-2 inline-block">
             去刷题提升排名 →
           </Link>
         </div>

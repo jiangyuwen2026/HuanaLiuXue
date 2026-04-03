@@ -175,25 +175,25 @@ function ExamReport() {
           {/* 操作按钮 */}
           <div className="flex flex-wrap gap-3 mt-6 pt-6 border-t">
             <button
-              onClick={() => navigate('/practice?mode=wrong_book')}
+              onClick={() => navigate('/english-training/wrong-book')}
               className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
             >
               <Flag className="w-4 h-4" />
               错题重练
             </button>
             <button
-              onClick={() => navigate('/practice')}
+              onClick={() => navigate('/english-training')}
               className="flex items-center gap-2 px-5 py-2.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
               再来一套
             </button>
             <button
-              onClick={() => navigate('/practice/history')}
+              onClick={() => navigate('/english-training/leaderboard')}
               className="flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
             >
               <BookOpen className="w-4 h-4" />
-              练习记录
+              排行榜
             </button>
           </div>
         </div>

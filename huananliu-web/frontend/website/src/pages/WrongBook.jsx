@@ -108,7 +108,7 @@ function WrongBook() {
 
   // 开始错题重练
   const startWrongBookPractice = () => {
-    navigate(`/practice/exam?mode=wrong_book&exam_type=${filters.exam_type || 'ielts'}`);
+    navigate(`/english-training/exam?mode=wrong_book&exam_type=${filters.exam_type || 'ielts'}`);
   };
 
   return (
@@ -186,7 +186,7 @@ function WrongBook() {
             <h3 className="text-xl font-bold text-gray-900 mb-2">太棒了！</h3>
             <p className="text-gray-500 mb-6">你的错题本为空，继续保持！</p>
             <Link
-              to="/practice"
+              to="/english-training"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#2C5F7C] text-white rounded-xl hover:bg-[#1e4a61] transition-colors"
             >
               去刷题
