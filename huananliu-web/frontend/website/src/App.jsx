@@ -22,6 +22,7 @@ import PracticeHome from './pages/PracticeHome';
 import PracticeExam from './pages/PracticeExam';
 import ExamReport from './pages/ExamReport';
 import WrongBook from './pages/WrongBook';
+import Leaderboard from './pages/Leaderboard';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -89,6 +90,7 @@ function App() {
               <Route path="/practice/exam" element={<PracticeExam />} />
               <Route path="/practice/report/:examId" element={<ExamReport />} />
               <Route path="/practice/wrong-book" element={<WrongBook />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
             </Routes>
           </ErrorBoundary>
         </main>

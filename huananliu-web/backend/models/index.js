@@ -512,7 +512,13 @@ const UserAnswer = sequelize.define('UserAnswer', {
   is_correct: { type: DataTypes.TINYINT, defaultValue: 0 },
   score: { type: DataTypes.DECIMAL(5, 2), defaultValue: 0 },
   time_spent: { type: DataTypes.INTEGER, defaultValue: 0 },
-  answer_analysis: { type: DataTypes.TEXT }
+  answer_analysis: { type: DataTypes.TEXT },
+  // AI 批改字段
+  ai_score: { type: DataTypes.DECIMAL(3, 1) },           // AI 评分 (0-9)
+  ai_details: { type: DataTypes.JSON },                  // 各项评分详情
+  ai_feedback: { type: DataTypes.TEXT },                 // AI 评语
+  ai_graded_at: { type: DataTypes.DATE },               // AI 批改时间
+  ai_model: { type: DataTypes.STRING(50) }              // 使用的 AI 模型
 }, {
   tableName: 'user_answers',
   timestamps: true,

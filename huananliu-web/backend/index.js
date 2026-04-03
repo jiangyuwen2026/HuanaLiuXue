@@ -47,6 +47,8 @@ const { router: testimonialsRouter, initDefaultTestimonials } = require('./route
 const questionsRouter = require('./routes/questions');
 const examRouter = require('./routes/exam');
 const examPapersRouter = require('./routes/examPapers');
+const aiGradingRouter = require('./routes/aiGrading');
+const leaderboardRouter = require('./routes/leaderboard');
 
 const app = express();
 
@@ -114,9 +116,13 @@ console.log('✅ 留言路由已加载: /api/testimonials');
 app.use('/api/questions', questionsRouter);
 app.use('/api/exam', examRouter);
 app.use('/api/exam-papers', examPapersRouter);
+app.use('/api/ai-grading', aiGradingRouter);
+app.use('/api/leaderboard', leaderboardRouter);
 console.log('✅ 题库路由已加载: /api/questions');
 console.log('✅ 考试路由已加载: /api/exam');
 console.log('✅ 试卷路由已加载: /api/exam-papers');
+console.log('✅ AI批改路由已加载: /api/ai-grading');
+console.log('✅ 排行榜路由已加载: /api/leaderboard');
 
 // 健康检查
 app.get('/api/health', (req, res) => {
